@@ -1,0 +1,49 @@
+.signup-card {
+  width: 400px;
+  margin: 80px auto;
+  padding: 30px;
+  border-radius: 12px;
+  background: #fff5f7;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  text-align: center;
+}
+
+.signup-card h2 {
+  margin-bottom: 20px;
+  color: #c95f7b;
+}
+
+.signup-card input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  outline: none;
+}
+
+.signup-card button {
+  width: 100%;
+  padding: 12px;
+  background: #c95f7b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.signup-card button:hover {
+  background: #a44461;
+}
+
+.google-btn {
+  margin-top: 15px;
+  width: 100%;
+  padding: 12px;
+  background: #4285F4;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}

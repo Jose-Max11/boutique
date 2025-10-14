@@ -1,0 +1,26 @@
+/* Boutique navbar styling */
+.boutique-navbar {
+  width: 100%;
+  background-color: #13142b; /* deep navy */
+  position: sticky; /* stays at top on scroll */
+  top: 0;
+  z-index: 1000;
+}
+
+/* Links and brand */
+.boutique-navbar .nav-link,
+.boutique-navbar .navbar-brand {
+  color: #ffffff; /* white text */
+  transition: color 0.3s ease;
+}
+
+.boutique-navbar .nav-link:hover,
+.boutique-navbar .navbar-brand:hover {
+  color: #685b27; /* gold hover */
+}
+
+/* Dropdown on hover */
+.boutique-navbar .dropdown:hover .dropdown-menu {
+  display: block;
+  margin-top: 0;
+}

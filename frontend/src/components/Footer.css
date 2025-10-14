@@ -1,0 +1,147 @@
+.footer {
+  background-color: #fff5f7;
+  color: #1e1e2f;
+  padding-top: 2rem;
+  border-top: 2px solid rgba(201, 95, 123, 0.2);
+  font-family: 'Poppins', sans-serif;
+  margin-top: 2rem;
+}
+
+/* Main footer layout */
+.footer-container {
+  max-width: 75rem; /* 1200px */
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 1.25rem;
+}
+
+/* Logo & Tagline */
+.footer-logo {
+  font-size: 1.375rem; /* 22px */
+  font-weight: 700;
+  color: #c95f7b;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-logo:hover {
+  color: #b14f69;
+}
+
+.footer-tagline {
+  font-size: 0.875rem; /* 14px */
+  color: #777;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+/* Section titles */
+.footer-section h4 {
+  font-size: 1.125rem; /* 18px */
+  font-weight: 700;
+  color: #1e1e2f;
+  margin-bottom: 1rem;
+}
+
+/* Links list */
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-section ul li a {
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  display: inline-block;
+}
+
+.footer-section ul li a:hover {
+  color: #c95f7b;
+}
+
+/* Contact info */
+.footer-section p {
+  font-size: 0.875rem; /* 14px */
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+.footer-section p a {
+  color: #c95f7b;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-section p a:hover {
+  color: #b14f69;
+}
+
+/* Social media icons */
+.social-icons {
+  margin-top: 1rem;
+}
+
+.social-icons a {
+  display: inline-block;
+  margin-right: 1rem;
+  font-size: 1.25rem; /* 20px */
+  color: #c95f7b;
+  transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #b14f69;
+  transform: translateY(-2px);
+}
+
+/* Bottom bar */
+.footer-bottom {
+  background-color:  #fff5f7;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 0.875rem; /* 14px */
+  margin-top: 1rem;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .footer-container {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .footer-section h4 {
+    font-size: 1rem;
+  }
+
+  .social-icons {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .footer-logo {
+    font-size: 1.25rem;
+  }
+
+  .social-icons a {
+    margin-right: 0.75rem;
+    font-size: 1.1rem;
+  }
+}

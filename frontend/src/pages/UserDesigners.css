@@ -1,0 +1,110 @@
+.user-designers {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* Whole card container */
+.designer-card {
+  display: flex;
+  align-items: stretch;
+  background: rgba(255, 255, 255, 0.9); /* light card bg */
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+  margin: 20px auto;
+  max-width: 900px;
+  overflow: hidden; /* makes corners smooth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.designer-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+}
+
+.designer-card.reverse {
+  flex-direction: row-reverse;
+}
+
+/* Image wrapper with overlay */
+.designer-image {
+  position: relative;
+  width: 300px;
+  min-height: 300px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.designer-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Overlay */
+.designer-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  text-align: center;
+}
+
+.designer-overlay h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.designer-overlay p {
+  margin: 5px 0 0;
+  font-size: 1rem;
+}
+
+.designer-image:hover .designer-overlay {
+  opacity: 1;
+}
+
+/* Designer details */
+.designer-details {
+  flex: 1;
+  padding: 1.5rem;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.designer-details h3 {
+  color: #c95f7b;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.designer-details p {
+  margin: 0.3rem 0;
+  font-size: 1rem;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .designer-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .designer-image {
+    width: 100%;
+    height: 250px;
+  }
+}

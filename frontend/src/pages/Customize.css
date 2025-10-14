@@ -1,0 +1,98 @@
+.customize-page {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff5f7;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+}
+
+.customize-page h1 {
+  color: #c95f7b;
+  margin-bottom: 0.5rem;
+}
+
+.customize-page p {
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.customize-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.upload-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.upload-group label {
+  font-weight: bold;
+  color: #c95f7b;
+}
+
+.upload-group input[type="file"] {
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.preview {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid #c95f7b;
+  margin-top: 0.5rem;
+}
+
+.preview-section {
+  margin-top: 2rem;
+}
+
+.preview-section h2 {
+  color: #c95f7b;
+  margin-bottom: 1rem;
+}
+
+.preview-combo {
+  position: relative;
+  display: inline-block;
+}
+
+.preview-combo img {
+  width: 300px;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.blouse-overlay {
+  position: absolute;
+  top: 50px; /* Adjust overlay position */
+  left: 50px;
+  opacity: 0.8;
+  border: 2px solid #c95f7b;
+}
+
+.share-btn {
+  background-color: #c95f7b;
+  color: #fff;
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  transition: background-color 0.3s;
+}
+
+.share-btn:hover {
+  background-color: #b14f68;
+}

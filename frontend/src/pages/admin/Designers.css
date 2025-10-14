@@ -1,0 +1,137 @@
+/* Designers.css */
+
+/* Scope everything inside .designers-page */
+.designers-page {
+  max-width: 1000px;
+  margin: 50px auto;
+  padding: 35px;
+  background: #111129ff;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  font-family: "Poppins", sans-serif;
+  color: #fff;
+}
+
+/* Headings */
+.designers-page h2,
+.designers-page h3 {
+  text-align: center;
+  font-weight: 700;
+  color: #fff;
+}
+
+.designers-page h2 {
+  font-size: 32px;
+  margin-bottom: 30px;
+}
+
+.designers-page h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Form */
+.designers-page form {
+  margin-bottom: 40px;
+}
+
+.designers-page form .form-control {
+  padding: 12px 18px;
+  border-radius: 50px;
+  border: 1px solid #f8f8f8ff;
+  background: #121238ff;
+  color: #fff;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.designers-page form .form-control::placeholder {
+  color: #fff;
+}
+
+.designers-page form .form-control:focus {
+  border-color: #fff;
+  box-shadow: 0 0 8px rgba(0,0,0,1);
+}
+
+.designers-page form textarea.form-control {
+  resize: none;
+  min-height: 80px;
+}
+
+/* Buttons */
+.designers-page .btn-darkblue {
+  background: linear-gradient(135deg, #2c0e4dff, #1247a3ff);
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 5px 15px rgba(26,42,66,0.5);
+}
+
+.designers-page .btn-darkblue:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(29,47,75,0.7);
+}
+
+/* Cards */
+.designers-page .card {
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.designers-page .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.5);
+}
+
+.designers-page .card-body h5 {
+  font-weight: 600;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.designers-page .card-text {
+  font-size: 14px;
+  color: #555;
+}
+
+.designers-page .mt-auto {
+  margin-top: auto !important;
+}
+
+.designers-page .card .btn-darkblue.btn-sm {
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .designers-page .card-body h5 {
+    font-size: 18px;
+  }
+
+  .designers-page form .form-control {
+    font-size: 14px;
+    padding: 10px 14px;
+  }
+
+  .designers-page .btn-darkblue {
+    font-size: 14px;
+    padding: 10px 24px;
+  }
+}
+
+@media (max-width: 576px) {
+  .designers-page {
+    padding: 20px;
+  }
+}

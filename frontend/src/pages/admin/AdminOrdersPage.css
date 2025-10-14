@@ -1,0 +1,146 @@
+/* Container */
+.admin-orders-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff5f7;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Heading */
+.admin-orders-container h2 {
+  color: #c95f7b;
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Table */
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.orders-table th,
+.orders-table td {
+  padding: 12px 15px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.orders-table th {
+  background-color: #c95f7b;
+  color: #fff;
+  font-weight: 600;
+}
+
+.orders-table tr {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.orders-table tr:nth-child(even) {
+  background-color: #fff0f3;
+}
+
+.orders-table tr:hover {
+  background-color: #ffe3ec;
+}
+
+/* Select dropdown */
+.orders-table select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+}
+
+.orders-table select:focus {
+  outline: none;
+  border-color: #c95f7b;
+  box-shadow: 0 0 5px rgba(201, 95, 123, 0.5);
+}
+
+/* No orders text */
+.admin-orders-container p {
+  text-align: center;
+  font-size: 18px;
+  color: #999;
+  margin-top: 40px;
+}
+
+/* Loading */
+.admin-orders-container div {
+  text-align: center;
+  font-size: 18px;
+  color: #c95f7b;
+}
+
+/* Status badges */
+.status-badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 500;
+  text-transform: capitalize;
+  font-size: 14px;
+}
+
+.badge-pending { background-color: #f0ad4e; }
+.badge-confirmed { background-color: #5bc0de; }
+.badge-shipped { background-color: #0275d8; }
+.badge-delivered { background-color: #5cb85c; }
+.badge-cancelled { background-color: #d9534f; }
+
+/* Responsive: Tablets */
+@media (max-width: 992px) {
+  .orders-table th,
+  .orders-table td {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .admin-orders-container h2 {
+    font-size: 24px;
+  }
+}
+
+/* Responsive: Mobile */
+@media (max-width: 768px) {
+  .admin-orders-container {
+    padding: 10px;
+  }
+
+  .orders-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .orders-table th,
+  .orders-table td {
+    white-space: nowrap;
+  }
+
+  /* Optional: add some padding for scroll hint */
+  .orders-table::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .orders-table::-webkit-scrollbar-thumb {
+    background-color: rgba(201, 95, 123, 0.5);
+    border-radius: 4px;
+  }
+
+  .orders-table::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}

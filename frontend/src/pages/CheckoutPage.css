@@ -1,0 +1,210 @@
+/* --- Layout --- */
+.checkout-page-container {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 20px;
+}
+
+.checkout-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.checkout-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: space-between;
+}
+
+/* --- Left Side (Form) --- */
+.billing-form {
+  flex: 1;
+  min-width: 350px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 25px 30px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.billing-form h3 {
+  font-size: 1.3rem;
+  color: #222;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 6px;
+}
+
+/* --- Address Sections --- */
+.address-section {
+  margin-bottom: 25px;
+  background: #fafafa;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #eee;
+}
+
+.address-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.address-header h4 {
+  font-size: 1rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.delete-address-btn {
+  background: transparent;
+  border: none;
+  color: #e63946;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.3s ease;
+}
+
+.delete-address-btn:hover {
+  color: #b5171a;
+}
+
+/* --- Input Fields with Lines --- */
+.input-label {
+  font-size: 0.9rem;
+  color: #666;
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.billing-form input,
+.billing-form select {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  padding: 8px 4px;
+  font-size: 0.95rem;
+  outline: none;
+  background: transparent;
+  transition: border-color 0.3s ease;
+}
+
+.billing-form input:focus,
+.billing-form select:focus {
+  border-color: #13142b;
+}
+
+.billing-form select {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 8px;
+}
+
+/* --- Add Button --- */
+.add-address-btn {
+  margin: 15px 0;
+  padding: 10px 15px;
+  background: #13142b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.3s ease;
+}
+
+.add-address-btn:hover {
+  background: #13142b;
+}
+
+/* --- Place Order Button --- */
+.place-order-btn {
+  width: 100%;
+  background: #13142b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.3s ease;
+}
+
+.place-order-btn:hover {
+  background: #13142b;
+}
+
+/* --- Right Side (Summary) --- */
+.checkout-summary {
+  flex: 0.4;
+  min-width: 300px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.checkout-summary h3 {
+  font-size: 1.2rem;
+  color: #222;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 6px;
+}
+
+.summary-items {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.summary-item-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #333;
+  margin-top: 15px;
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  .checkout-content {
+    flex-direction: column;
+  }
+  .checkout-summary {
+    order: -1;
+  }
+}

@@ -1,0 +1,198 @@
+/* ========== Category Page Container ========== */
+.category-page {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background-color: #fff5f7;
+}
+
+/* ========== Back Button ========== */
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #13142b;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 25px;
+  transition: color 0.3s ease;
+}
+
+.back-btn:hover {
+  color: #c95f7b; /* subtle hover effect */
+}
+
+/* ========== Category Title ========== */
+.category-title {
+  font-size: 26px;
+  font-weight: 600;
+  text-align: center;
+  color: #333;
+  margin-bottom: 35px;
+}
+
+/* ========== Grid Layout ========== */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px; /* reduced gap for tighter layout */
+}
+
+/* ========== Card Container ========== */
+.category-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* ========== Image Wrapper (Centered Image) ========== */
+.image-wrapper {
+  width: 100%;
+  height: 260px; /* slightly smaller */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  overflow: hidden;
+  position: relative;
+  border-bottom: 1px solid #eee;
+}
+
+.category-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.category-card:hover .category-img {
+  transform: scale(1.05);
+}
+
+/* ========== Offer Badge ========== */
+.offer-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: #c95f7b; /* rose-pink theme */
+  color: #fff;
+  font-size: 13px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+/* ========== Carousel Indicator ========== */
+.carousel-indicator {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* ========== Product Name ========== */
+.category-name {
+  font-size: 17px;
+  font-weight: 500;
+  color: #333;
+  text-align: center;
+  margin-top: 10px;
+  min-height: 46px;
+  padding: 0 10px;
+}
+
+/* ========== Price ========== */
+.category-price {
+  text-align: center;
+  color: #13142b;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.old-price {
+  color: #888;
+  text-decoration: line-through;
+  font-size: 14px;
+  margin-left: 6px;
+}
+
+/* ========== Rating and Delivery Info ========== */
+.product-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px 14px;
+  font-size: 13px;
+}
+
+.rating-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #00a82d;
+  font-weight: 500;
+}
+
+.free-delivery {
+  color: #333;
+  font-weight: 500;
+}
+
+/* ========== No Products Message ========== */
+.no-products {
+  text-align: center;
+  color: #555;
+  font-size: 17px;
+  margin-top: 40px;
+}
+
+/* ========== Hover Effects for Info Badges ========== */
+.category-card:hover .rating-badge,
+.category-card:hover .free-delivery {
+  color: #c95f7b; /* subtle rose-pink hover */
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 768px) {
+  .category-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+  }
+
+  .image-wrapper {
+    height: 200px;
+  }
+
+  .category-name {
+    font-size: 15px;
+  }
+
+  .category-price {
+    font-size: 16px;
+  }
+
+  .offer-badge {
+    font-size: 12px;
+    padding: 3px 6px;
+  }
+
+  .carousel-indicator {
+    font-size: 10px;
+    padding: 1px 4px;
+  }
+}

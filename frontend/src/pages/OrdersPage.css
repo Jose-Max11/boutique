@@ -1,0 +1,136 @@
+.order-history-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.order-card {
+  border: 1px solid #eee;
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.order-items {
+  margin-top: 1rem;
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.order-item img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+/* Horizontal progress bar */
+.horizontal-progress {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+  position: relative;
+}
+
+.step-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+}
+
+.circle {
+  width: 30px;
+  height: 30px;
+  background-color: #eee;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #aaa;
+  font-weight: bold;
+  z-index: 2;
+}
+
+.circle.active {
+  background-color: #13142b;
+  color: #fff;
+}
+
+.line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 4px;
+  width: 100%;
+  background-color: #eee;
+  z-index: 1;
+  transform: translateX(0%);
+}
+
+.line.active-line {
+  background-color: #13142b;
+}
+
+.step-label {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  text-align: center;
+  color: #aaa;
+}
+
+.step-label.active-label {
+  color: #13142b;
+  font-weight: 500;
+}
+.cancel-btn {
+  background-color: #ff5f5f;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.cancel-btn:hover {
+  background-color: #d94c4c;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.undo-notification {
+  background-color: #ffe0e0;
+  color: #b30000;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.undo-notification button {
+  background-color: #b30000;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.undo-notification button:hover {
+  background-color: #800000;
+}

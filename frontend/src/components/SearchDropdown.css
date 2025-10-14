@@ -1,0 +1,46 @@
+/* components/SearchDropdown.css */
+.search-dropdown {
+  position: relative;
+  width: 250px;
+}
+
+.search-dropdown input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #c95f7b;
+  border-radius: 6px;
+  outline: none;
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #c95f7b;
+  border-radius: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.dropdown-list li:hover {
+  background-color: #f8d7e0;
+}
+
+.dropdown-img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+}
