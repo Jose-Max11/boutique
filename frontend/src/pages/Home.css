@@ -8,10 +8,12 @@
 .app {
   font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #e8e9ed;
-  background: #eff2f7;
+  background: url('/images/userbg.png') no-repeat center center fixed;
+  background-size: cover; /* Makes the image fill the screen */
   min-height: 100vh;
   overflow-x: hidden;
 }
+
 
 /* ========== Hero Wrapper & Section ========== */
 .hero-wrapper {
@@ -94,22 +96,20 @@
 }
 
 .home-btn {
-  background: linear-gradient(135deg, #061529 0%, #060f19 100%);
+  background: linear-gradient(135deg, #aa435f 0%, #aa435f 100%);
   color: #ffffff;
-  border: 2px solid rgba(255, 255, 255, 0.1);
   padding: 16px 48px;
   font-size: 18px;
   font-weight: 600;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 0 8px 24px rgba(30, 58, 95, 0.4);
   text-transform: uppercase;
   letter-spacing: 1.5px;
 }
 
 .home-btn:hover {
-  background: linear-gradient(135deg, #040e1a 0%, #04172e 100%);
+  background: linear-gradient(135deg, #c95f7b 0%, #c95f7b 100%);
   transform: translateY(-3px);
   box-shadow: 0 12px 32px rgba(6, 19, 35, 0.6);
   border-color: rgba(255, 255, 255, 0.2);

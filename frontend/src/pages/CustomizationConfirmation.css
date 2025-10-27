@@ -1,0 +1,60 @@
+.confirmation-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 30px;
+  text-align: center;
+  background-color: #fff5f7;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.confirmation-icon {
+  color: #c95f7b;
+  width: 60px;
+  height: 60px;
+  margin-bottom: 15px;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.confirmation-text {
+  color: #555;
+  margin-bottom: 25px;
+}
+
+.order-summary {
+  text-align: left;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+}
+
+.order-summary ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.order-summary li {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+.home-btn {
+  background-color: #c95f7b;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.home-btn:hover {
+  background-color: #b34f67;
+}

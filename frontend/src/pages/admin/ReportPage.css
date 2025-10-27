@@ -1,0 +1,76 @@
+.reports-page {
+  display: flex;
+  font-family: "Poppins", sans-serif;
+  color: #333;
+}
+
+.reports-sidebar {
+  width: 220px;
+  background: #fff5f7;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reports-sidebar button {
+  background: #c95f7b;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.reports-sidebar button.active {
+  background: #764ba2;
+}
+
+.reports-content {
+  flex: 1;
+  padding: 20px;
+}
+
+.report-section {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.report-section h3 {
+  color: #c95f7b;
+  margin-bottom: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+table th, table td {
+  border: 1px solid #eee;
+  padding: 12px;
+  text-align: left;
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.badge.pending { background: #f9a825; }
+.badge.completed { background: #43e97b; }
+.badge.cancelled { background: #ff6f61; }
+
+.no-data {
+  text-align: center;
+  color: #999;
+  padding: 30px 0;
+}

@@ -19,6 +19,13 @@ import orderRoutes from "./routes/orderRoutes.js";
 import adminOrdersRoutes from "./routes/adminOrders.js";
 import customerRoutes from "./routes/customerRoutes.js";
 import adminDashboardRoutes from "./routes/adminDashboard.js";
+import userRoutes from "./routes/user.js";
+import customOrdersRoutes from "./routes/customOrders.js";
+import dashboardRoutes from "./routes/dashboardRoutes.js";
+import revenueRoutes from "./routes/revenueRoutes.js";
+
+
+
 
 
 import { protect, authorize } from "./middleware/authMiddleware.js";
@@ -27,6 +34,7 @@ import "./config/passport.js"; // Google OAuth setup
 dotenv.config();
 const app = express();
 const __dirname = path.resolve();
+
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 
@@ -36,6 +44,9 @@ app.use(cors({
   credentials: true, // needed for session cookies
 }));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use("/uploads", express.static(path.join(path.resolve(), "uploads")));
 
 // Express session (required for Passport)
 app.use(session({
@@ -59,11 +70,16 @@ app.use("/auth", authRoutes);
 app.use("/api/admin/orders", adminOrdersRoutes);
 app.use("/api/admin", adminDashboardRoutes);
 app.use("/api/customers", customerRoutes);
+app.use("/user", userRoutes);
 
+app.use("/api/dashboard", dashboardRoutes);
 
 
 app.use("/api/cart", cartRoutes);
 app.use("/api/wishlist", wishlistRoutes);
+app.use("/api/custom-orders", customOrdersRoutes);
+app.use("/api/revenue", revenueRoutes);
+
 
 
 

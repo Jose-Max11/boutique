@@ -1,8 +1,8 @@
 /* Boutique navbar styling */
 .boutique-navbar {
   width: 100%;
-  background-color: #13142b; /* deep navy */
-  position: sticky; /* stays at top on scroll */
+  background-color: #c95f7b; 
+  position: sticky; 
   top: 0;
   z-index: 1000;
 }

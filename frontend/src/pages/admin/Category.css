@@ -1,0 +1,118 @@
+.category-page {
+  background: #fff5f7;
+  min-height: 100vh;
+  padding: 40px 5%;
+  text-align: center;
+}
+
+.category-title {
+  color: #c95f7b;
+  font-size: 2.2rem;
+  margin-bottom: 30px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* --- Search Bar --- */
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.search-bar {
+  width: 60%;
+  max-width: 600px;
+  padding: 12px 20px;
+  border: 2px solid #c95f7b;
+  border-radius: 30px;
+  font-size: 1rem;
+  outline: none;
+  background: white;
+  color: #333;
+  box-shadow: 0 3px 8px rgba(201, 95, 123, 0.2);
+  transition: all 0.3s ease;
+}
+
+.search-bar:focus {
+  border-color: #a84b66;
+  box-shadow: 0 0 10px rgba(201, 95, 123, 0.3);
+}
+
+/* --- Product Grid --- */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 25px;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.product-card {
+  background: white;
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  transition: 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(201, 95, 123, 0.3);
+}
+
+.product-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.product-price {
+  color: #c95f7b;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.product-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.btn-cart,
+.btn-wishlist {
+  background: #c95f7b;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-wishlist {
+  background: #f48ca7;
+}
+
+.btn-cart:hover,
+.btn-wishlist:hover {
+  opacity: 0.85;
+}
+
+.extra-info {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.no-products {
+  color: #999;
+  font-size: 1.1rem;
+  font-style: italic;
+}

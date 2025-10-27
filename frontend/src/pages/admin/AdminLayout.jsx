@@ -6,7 +6,7 @@ export default function AdminLayout() {
     <div className="admin-layout">
       <AdminNavbar />
       <div className="admin-content">
-        <Outlet /> {/* ✅ This will render the correct admin page */}
+        <Outlet /> {/* ✅ This will render the AdminDashboard or any other admin page */}
       </div>
     </div>
   );

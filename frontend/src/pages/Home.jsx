@@ -13,7 +13,7 @@ function Home() {
   const [categories, setCategories] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentImageIndex, setCurrentImageIndex] = useState(0); // Hero carousel
-  const [hoveredProductId, setHoveredProductId] = useState(null); // Pause on hover
+  const [hoveredProductId, setHoveredProductId] = useState(null); // Pause product carousel on hover
   const categoriesPerPage = 4;
   const navigate = useNavigate();
 
@@ -38,7 +38,12 @@ function Home() {
     const fetchProducts = async () => {
       try {
         const res = await axios.get(`${BACKEND_URL}/api/products`);
-        const productsWithImages = res.data.map((prod) => ({
+        // Sort by updatedAt descending
+        const sortedProducts = res.data.sort(
+          (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
+        );
+
+        const productsWithImages = sortedProducts.map((prod) => ({
           ...prod,
           images: Array.isArray(prod.images) && prod.images.length > 0
             ? prod.images
@@ -47,23 +52,22 @@ function Home() {
               : [],
           currentImageIndex: 0, // For auto-sliding product images
         }));
+
         setProducts(productsWithImages);
 
         // Build dynamic categories
         const map = new Map();
         productsWithImages.forEach((prod) => {
-          if (prod.category) {
-            if (!map.has(prod.category._id)) {
-              map.set(prod.category._id, {
-                id: prod.category._id,
-                name: prod.category.name,
-                image: prod.images[0]
-                  ? prod.images[0].startsWith("http")
-                    ? prod.images[0]
-                    : `${BACKEND_URL}/${prod.images[0]}`
-                  : "/images/default-category.jpg",
-              });
-            }
+          if (prod.category && !map.has(prod.category._id)) {
+            map.set(prod.category._id, {
+              id: prod.category._id,
+              name: prod.category.name,
+              image: prod.images[0]
+                ? prod.images[0].startsWith("http")
+                  ? prod.images[0]
+                  : `${BACKEND_URL}/${prod.images[0]}`
+                : "/images/default-category.jpg",
+            });
           }
         });
         setCategories(Array.from(map.values()));
@@ -96,7 +100,7 @@ function Home() {
       );
     }, 3000);
     return () => clearInterval(interval);
-  }, [hoveredProductId, products]);
+  }, [hoveredProductId]);
 
   // Pagination
   const indexOfLastCategory = currentPage * categoriesPerPage;
@@ -208,8 +212,6 @@ function Home() {
                   )
                 : ["https://via.placeholder.com/300x450?text=No+Image"];
 
-              const currentImage = images[prod.currentImageIndex] || images[0];
-
               return (
                 <div
                   className="product-card"
@@ -219,7 +221,50 @@ function Home() {
                   onMouseLeave={() => setHoveredProductId(null)}
                   style={{ cursor: prod.category ? "pointer" : "default" }}
                 >
-                  <img src={currentImage} alt={prod.name} loading="lazy" />
+                  <div style={{ position: "relative", width: "100%", height: "450px", overflow: "hidden" }}>
+                    <img
+                      src={images[prod.currentImageIndex]}
+                      alt={prod.name}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.4s" }}
+                      onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+                      onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                    />
+                    {images.length > 1 && (
+                      <div style={{
+                        position: "absolute",
+                        bottom: "10px",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        display: "flex",
+                        gap: "5px",
+                        zIndex: 10,
+                      }}>
+                        {images.map((_, index) => (
+                          <span
+                            key={index}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setProducts((prev) =>
+                                prev.map((p) =>
+                                  p._id === prod._id
+                                    ? { ...p, currentImageIndex: index }
+                                    : p
+                                )
+                              );
+                            }}
+                            style={{
+                              width: "10px",
+                              height: "10px",
+                              borderRadius: "50%",
+                              background: prod.currentImageIndex === index ? "#c95f7b" : "rgba(255,255,255,0.6)",
+                              cursor: "pointer",
+                              border: "1px solid #fff",
+                            }}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
                   <h3>{prod.name}</h3>
                   <p className="category">{prod.category?.name || "Uncategorized"}</p>
                   <p className="price">₹{prod.price}</p>

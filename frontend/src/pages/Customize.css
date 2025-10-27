@@ -1,98 +1,209 @@
-.customize-page {
-  max-width: 1000px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background-color: #fff5f7;
-  border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  text-align: center;
-  font-family: 'Arial', sans-serif;
-}
+/* Customize.css */
 
-.customize-page h1 {
-  color: #c95f7b;
-  margin-bottom: 0.5rem;
-}
-
-.customize-page p {
+/* ===== Page Layout ===== */
+.dress-customization {
+  background-color: #fff5f7; /* light pink background */
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  font-family: 'Poppins', sans-serif;
   color: #333;
-  margin-bottom: 2rem;
 }
 
-.customize-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+.form-container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  padding: 2rem 2rem 3rem 2rem;
 }
 
-.upload-group {
+.form-title {
+  font-size: 2rem;
+  color: #c95f7b; /* rose-pink accent */
   display: flex;
-  flex-direction: column;
   align-items: center;
   gap: 0.5rem;
 }
 
-.upload-group label {
-  font-weight: bold;
-  color: #c95f7b;
+.form-sub {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 1.5rem;
 }
 
-.upload-group input[type="file"] {
-  padding: 0.5rem;
-  border-radius: 5px;
+/* ===== Sections ===== */
+.section-heading {
+  font-size: 1.2rem;
+  color: #1b2a49; /* deep blue accent */
+  margin: 1.5rem 0 0.8rem;
+  border-bottom: 2px solid #c95f7b;
+  display: inline-block;
+  padding-bottom: 3px;
+}
+
+/* ===== Form Fields ===== */
+.field {
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  margin-bottom: 1rem;
   border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
 }
 
-.preview {
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 10px;
-  border: 2px solid #c95f7b;
-  margin-top: 0.5rem;
+.field:focus {
+  border-color: #c95f7b;
+  outline: none;
 }
 
-.preview-section {
-  margin-top: 2rem;
+.textarea-field {
+  min-height: 80px;
+  resize: vertical;
 }
 
-.preview-section h2 {
-  color: #c95f7b;
+/* ===== React Select Styling ===== */
+.react-select {
   margin-bottom: 1rem;
 }
 
-.preview-combo {
-  position: relative;
-  display: inline-block;
+/* ===== File Upload Labels ===== */
+.file-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f9e6eb;
+  color: #c95f7b;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
 }
 
-.preview-combo img {
-  width: 300px;
-  height: 400px;
+.file-label input {
+  display: none;
+}
+
+/* ===== Preview Images ===== */
+.preview-image {
+  width: 80px;
+  height: 80px;
   object-fit: cover;
-  border-radius: 15px;
-}
-
-.blouse-overlay {
-  position: absolute;
-  top: 50px; /* Adjust overlay position */
-  left: 50px;
-  opacity: 0.8;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
   border: 2px solid #c95f7b;
 }
 
-.share-btn {
-  background-color: #c95f7b;
+/* ===== Submit Button ===== */
+.submit-btn {
+  background: #1b2a49; /* deep blue */
   color: #fff;
-  padding: 0.8rem 2rem;
   border: none;
+  padding: 0.7rem 1.2rem;
   border-radius: 10px;
   font-size: 1rem;
   cursor: pointer;
-  margin-top: 1.5rem;
-  transition: background-color 0.3s;
+  transition: 0.2s;
+  margin-top: 1rem;
+  display: inline-block;
 }
 
-.share-btn:hover {
-  background-color: #b14f68;
+.submit-btn:hover {
+  background: #c95f7b;
+  color: #fff;
+}
+
+/* ===== Previous Orders ===== */
+.previous-orders {
+  margin-top: 3rem;
+}
+
+.order-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  padding: 1rem 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.order-card h3 {
+  color: #c95f7b;
+  margin-bottom: 0.3rem;
+}
+
+.order-card p {
+  font-size: 0.9rem;
+  margin: 0.2rem 0;
+}
+
+.order-images {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.order-preview {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  border: 2px solid #1b2a49;
+}
+
+/* ===== Edit/Delete Buttons ===== */
+.order-actions {
+  margin-top: 0.8rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.edit-btn, .delete-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  border: none;
+  padding: 0.4rem 0.7rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.edit-btn {
+  background: #1b2a49;
+  color: #fff;
+}
+
+.edit-btn:hover {
+  background: #c95f7b;
+}
+
+.delete-btn {
+  background: #fbe4e8;
+  color: #c95f7b;
+}
+
+.delete-btn:hover {
+  background: #c95f7b;
+  color: #fff;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+  .dress-customization {
+    padding: 1rem;
+  }
+
+  .form-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .order-images {
+    justify-content: flex-start;
+  }
 }

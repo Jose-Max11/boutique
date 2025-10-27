@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   LogOut,
@@ -7,7 +7,7 @@ import {
   Menu,
   X,
   Heart,
-  User
+  User,
 } from "lucide-react";
 import axios from "axios";
 import { useCartWishlist } from "../pages/CartWishlistContext";
@@ -18,14 +18,13 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const [allProducts, setAllProducts] = useState([]);
 
   const navigate = useNavigate();
   const { cart, wishlist } = useCartWishlist();
-  const searchRef = useRef(null);
 
   // Scroll effect
   useEffect(() => {
@@ -47,36 +46,23 @@ export default function Navbar() {
     fetchCategories();
   }, []);
 
-  // Search API
+  // Fetch all products once for search drawer
   useEffect(() => {
     const fetchProducts = async () => {
-      if (searchTerm.trim() === "") {
-        setSearchResults([]);
-        return;
-      }
       try {
-        const res = await axios.get(
-          `http://localhost:5000/api/products/search?search=${searchTerm}`
-        );
-        setSearchResults(res.data);
+        const res = await axios.get("http://localhost:5000/api/products");
+        setAllProducts(res.data);
       } catch (err) {
-        console.error(err);
+        console.error("Error fetching products:", err);
       }
     };
     fetchProducts();
-  }, [searchTerm]);
-
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-    setDrawerOpen(true);
-  };
+  }, []);
 
   const handleProductClick = (productId) => {
     navigate(`/designs/${productId}`);
     setDrawerOpen(false);
   };
-
-  const closeDrawer = () => setDrawerOpen(false);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -106,14 +92,26 @@ export default function Navbar() {
             }}
             aria-label="Toggle navigation"
           >
-            {isMobileMenuOpen ? <X size={24} color="white" /> : <Menu size={24} color="white" />}
+            {isMobileMenuOpen ? (
+              <X size={24} color="white" />
+            ) : (
+              <Menu size={24} color="white" />
+            )}
           </button>
 
-          <div className={`collapse navbar-collapse ${isMobileMenuOpen ? "show" : ""}`}>
+          <div
+            className={`collapse navbar-collapse ${
+              isMobileMenuOpen ? "show" : ""
+            }`}
+          >
             {/* Nav links */}
             <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className="nav-link" to="/" onClick={() => setIsMobileMenuOpen(false)}>
+                <Link
+                  className="nav-link"
+                  to="/"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
                   Home
                 </Link>
               </li>
@@ -130,7 +128,10 @@ export default function Navbar() {
                 >
                   Categories
                 </Link>
-                <ul className="dropdown-menu" aria-labelledby="categoriesDropdown">
+                <ul
+                  className="dropdown-menu"
+                  aria-labelledby="categoriesDropdown"
+                >
                   {categories.length > 0 ? (
                     categories.map((cat) => (
                       <li key={cat._id}>
@@ -145,60 +146,67 @@ export default function Navbar() {
                     ))
                   ) : (
                     <li>
-                      <span className="dropdown-item text-muted">No categories yet</span>
+                      <span className="dropdown-item text-muted">
+                        No categories yet
+                      </span>
                     </li>
                   )}
                 </ul>
               </li>
 
               <li className="nav-item">
-                <Link className="nav-link" to="/designs" onClick={() => setIsMobileMenuOpen(false)}>
+                <Link
+                  className="nav-link"
+                  to="/designs"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
                   Designs
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/customize" onClick={() => setIsMobileMenuOpen(false)}>
+                <Link
+                  className="nav-link"
+                  to="/customize"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
                   Customize
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/designers" onClick={() => setIsMobileMenuOpen(false)}>
+                <Link
+                  className="nav-link"
+                  to="/designers"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
                   Designers
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/reviews" onClick={() => setIsMobileMenuOpen(false)}>
-                  Reviews
                 </Link>
               </li>
             </ul>
 
             {/* Right side */}
             <div className="d-flex align-items-center flex-wrap">
-              {/* Search input */}
-              <div className="me-2 mb-2 mb-lg-0 position-relative" ref={searchRef}>
-                <input
-                  type="text"
-                  className="form-control form-control-sm"
-                  placeholder="Search products..."
-                  value={searchTerm}
-                  onChange={handleSearchChange}
-                  style={{ width: "160px" }}
-                />
-                <Search
-                  size={18}
-                  style={{
-                    position: "absolute",
-                    right: "8px",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    color: "#888",
-                  }}
-                />
-              </div>
+              {/* 🔍 Only Search Icon */}
+              <button
+                className="btn btn-light btn-sm me-2 mb-2 mb-lg-0"
+                onClick={() => setDrawerOpen(true)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: "50%",
+                  width: "36px",
+                  height: "36px",
+                  padding: "0",
+                }}
+              >
+                <Search size={18} />
+              </button>
 
               {/* Cart */}
-              <Link className="btn btn-light btn-sm position-relative me-2 mb-2 mb-lg-0" to="/cart">
+              <Link
+                className="btn btn-light btn-sm position-relative me-2 mb-2 mb-lg-0"
+                to="/cart"
+              >
                 <ShoppingCart size={18} />
                 {cart.length > 0 && (
                   <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -208,7 +216,10 @@ export default function Navbar() {
               </Link>
 
               {/* Wishlist */}
-              <Link className="btn btn-light btn-sm position-relative me-2 mb-2 mb-lg-0" to="/wishlist">
+              <Link
+                className="btn btn-light btn-sm position-relative me-2 mb-2 mb-lg-0"
+                to="/wishlist"
+              >
                 <Heart size={18} />
                 {wishlist.length > 0 && (
                   <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -222,7 +233,9 @@ export default function Navbar() {
                 <div className="profile-dropdown me-2 mb-2 mb-lg-0 position-relative">
                   <button
                     className="btn btn-light btn-sm d-flex align-items-center"
-                    onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+                    onClick={() =>
+                      setProfileDropdownOpen(!profileDropdownOpen)
+                    }
                   >
                     <User size={18} className="me-1" />
                     Profile
@@ -259,8 +272,8 @@ export default function Navbar() {
       {/* Search Drawer */}
       <SearchDrawer
         isOpen={drawerOpen}
-        products={searchResults}
-        onClose={closeDrawer}
+        products={allProducts}
+        onClose={() => setDrawerOpen(false)}
         onProductClick={handleProductClick}
       />
     </>

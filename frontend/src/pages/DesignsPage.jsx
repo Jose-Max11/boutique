@@ -1,53 +1,57 @@
+// src/pages/DesignsPage.jsx
 import { useEffect, useState } from "react";
 import axios from "axios";
 import {
   Heart,
   ShoppingCart,
-  ChevronLeft,
-  ChevronRight,
   Star,
   Truck,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useCartWishlist } from "./CartWishlistContext";
 import Navbar from "../components/Navbar";
-import "./DesignsPage.css";
 
 const BACKEND_URL = "http://localhost:5000";
 
 export default function DesignsPage() {
   const [products, setProducts] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [hovered, setHovered] = useState(false);
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const { addToCart, addToWishlist, removeFromWishlist, wishlist } = useCartWishlist();
 
-  // Fetch products from backend
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchUser = async () => {
       try {
-        const res = await axios.get(`${BACKEND_URL}/api/products`);
-        const productsWithImages = res.data.map((p) => ({
-          ...p,
-          images: Array.isArray(p.images) && p.images.length > 0
-            ? p.images
-            : p.image
-              ? [p.image]
-              : [],
-          currentImageIndex: 0,
-        }));
-        setProducts(productsWithImages);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-        setProducts([]);
+        const res = await axios.get(`${BACKEND_URL}/api/auth/me`, { withCredentials: true });
+        setUser(res.data.user);
+      } catch {
+        setUser(null);
       }
     };
-    fetchProducts();
+    fetchUser();
   }, []);
 
-  // Auto-slide images every 3s (pause on hover)
+  const fetchProducts = async () => {
+    try {
+      const res = await axios.get(`${BACKEND_URL}/api/products`, { withCredentials: true });
+      const productsWithImages = res.data.map((p) => ({
+        ...p,
+        images: Array.isArray(p.images) && p.images.length > 0 ? p.images : p.image ? [p.image] : [],
+        currentImageIndex: 0,
+      }));
+      setProducts(productsWithImages);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      setProducts([]);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, [user]);
+
+  // Auto-rotate images every 3 seconds
   useEffect(() => {
     if (hovered) return;
     const interval = setInterval(() => {
@@ -67,46 +71,142 @@ export default function DesignsPage() {
   const handleAddToCart = (product) => addToCart(product);
 
   const handleWishListToggle = (product) => {
-    wishlist.some((item) => item._id === product._id)
-      ? removeFromWishlist(product._id)
-      : addToWishlist(product);
+    if (wishlist.some((item) => item._id === product._id)) {
+      removeFromWishlist(product._id);
+    } else {
+      addToWishlist(product);
+    }
   };
 
-  const showProductModal = (product) => {
-    setSelectedProduct(product);
-    setActiveImageIndex(0);
-    setShowModal(true);
-  };
+  const inWishlist = (product) => wishlist.some((item) => item._id === product._id);
 
-  const closeModal = () => setShowModal(false);
+  const goToProductPage = (product) => navigate(`/designs/${product._id}`);
 
-  const handleBuyNow = () => {
-    navigate(`/designs/${selectedProduct._id}`);
-    setShowModal(false);
-  };
-
-  const prevImage = () => {
-    if (!selectedProduct?.images?.length) return;
-    setActiveImageIndex((prev) =>
-      prev === 0 ? selectedProduct.images.length - 1 : prev - 1
-    );
-  };
-
-  const nextImage = () => {
-    if (!selectedProduct?.images?.length) return;
-    setActiveImageIndex((prev) =>
-      prev === selectedProduct.images.length - 1 ? 0 : prev + 1
-    );
+  // ===== Inline Styles =====
+  const styles = {
+    container: {
+      padding: "60px 40px",
+      background: "#f9f9fa",
+      fontFamily: "'Poppins', sans-serif",
+      color: "#c95f7b",
+    },
+    heading: {
+      fontSize: "32px",
+      fontWeight: 600,
+      color: "#c95f7b",
+      marginBottom: "40px",
+      textAlign: "center",
+    },
+    productCardList: {
+      display: "flex",
+      flexWrap: "wrap",
+      gap: "25px",
+      justifyContent: "center",
+    },
+    productCard: {
+      position: "relative",
+      width: "250px",
+      background: "#fff",
+      borderRadius: "20px",
+      overflow: "hidden",
+      boxShadow: "0 8px 25px rgba(0,0,0,0.1)",
+      cursor: "pointer",
+      transition: "transform 0.3s, box-shadow 0.3s",
+    },
+    productImageBox: {
+      position: "relative",
+      width: "100%",
+      height: "320px",
+      overflow: "hidden",
+      borderRadius: "20px",
+    },
+    productImage: {
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+      transition: "transform 0.4s ease",
+      borderRadius: "20px",
+    },
+    offerBadge: {
+      position: "absolute",
+      top: "12px",
+      left: "12px",
+      background: "#c95f7b",
+      color: "#fff",
+      fontSize: "12px",
+      fontWeight: 600,
+      padding: "4px 10px",
+      borderRadius: "15px",
+      zIndex: 5,
+    },
+    // Updated carousel indicator style (like UserDashboard)
+    carouselIndicator: {
+      position: "absolute",
+      bottom: "8px",
+      right: "8px",
+      background: "rgba(26,42,108,0.8)",
+      color: "#fff",
+      fontSize: "12px",
+      padding: "2px 6px",
+      borderRadius: "12px",
+      zIndex: 5,
+    },
+    floatingBadges: {
+      position: "absolute",
+      bottom: "12px",
+      left: "12px",
+      display: "flex",
+      gap: "8px",
+      zIndex: 5,
+    },
+    badge: {
+      display: "flex",
+      alignItems: "center",
+      gap: "4px",
+      background: "#e6edf8",
+      color: "#c95f7b",
+      fontSize: "12px",
+      fontWeight: 500,
+      padding: "4px 8px",
+      borderRadius: "12px",
+    },
+    productInfo: { padding: "12px 15px", textAlign: "center" },
+    productPrice: { fontSize: "15px", fontWeight: 500, color: "#c95f7b" },
+    productActions: {
+      display: "flex",
+      justifyContent: "space-between",
+      padding: "8px 12px 12px 12px",
+    },
+    actionBtn: {
+      width: "36px",
+      height: "36px",
+      borderRadius: "50%",
+      border: "none",
+      background: "#c95f7b",
+      color: "#fff",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      cursor: "pointer",
+      transition: "all 0.3s",
+    },
+    noProducts: {
+      fontSize: "16px",
+      color: "#666",
+      textAlign: "center",
+      width: "100%",
+      marginTop: "50px",
+    },
   };
 
   return (
     <>
       <Navbar />
-      <div className="designs-page-container">
-        <h2 className="mb-4">Showcase Designs</h2>
-        <div className="product-card-list">
+      <div style={styles.container}>
+        <h2 style={styles.heading}>Showcase Designs</h2>
+        <div style={styles.productCardList}>
           {products.length === 0 ? (
-            <p className="no-products">No products available yet.</p>
+            <p style={styles.noProducts}>No products available yet.</p>
           ) : (
             products.map((product) => {
               const images = product.images.length
@@ -115,67 +215,70 @@ export default function DesignsPage() {
                   )
                 : ["https://via.placeholder.com/300x450?text=No+Image"];
 
-              const currentImage =
-                images[product.currentImageIndex] || images[0];
-
-              const inWishlist = wishlist.some((item) => item._id === product._id);
+              const currentImage = images[product.currentImageIndex];
+              const wishlisted = inWishlist(product);
 
               return (
-                <div
-                  className="product-card"
-                  key={product._id}
-                  onMouseEnter={() => setHovered(true)}
-                  onMouseLeave={() => setHovered(false)}
-                >
+                <div key={product._id} style={styles.productCard}>
                   <div
-                    className="product-image-box"
-                    onClick={() => showProductModal(product)}
+                    style={styles.productImageBox}
+                    onClick={() => goToProductPage(product)}
                   >
                     <img
                       src={currentImage}
                       alt={product.name}
-                      className="product-image fade-animation"
+                      style={styles.productImage}
                     />
-
                     {product.discount && (
-                      <span className="offer-badge">{product.discount}% off</span>
+                      <span style={styles.offerBadge}>
+                        {product.discount}% off
+                      </span>
                     )}
 
+                    {/* ✅ Image count like UserDashboard */}
                     {images.length > 1 && (
-                      <div className="carousel-indicator">{images.length} images</div>
+                      <div style={styles.carouselIndicator}>
+                        {product.currentImageIndex + 1}/{images.length}
+                      </div>
                     )}
 
-                    {/* ⭐ Rating & 🚚 Free Delivery floating inside image */}
-                    <div className="floating-badges">
-                      <div className="badge rating-badge">
+                    <div style={styles.floatingBadges}>
+                      <div style={styles.badge}>
                         <Star size={14} fill="#00a82d" stroke="none" />
-                        <span>{product.rating || "4.5"}</span>
+                        <span>{product.averageRating?.toFixed(1) || "4.5"}</span>
                       </div>
-                      <div className="badge delivery">
+                      <div style={styles.badge}>
                         <Truck size={14} />
                         <span>Free Delivery</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="product-info">
+                  <div style={styles.productInfo}>
                     <h5>{product.name}</h5>
-                    <span className="product-price">₹{product.price}</span>
+                    <span style={styles.productPrice}>₹{product.price}</span>
                   </div>
 
-                  <div className="product-actions">
+                  <div style={styles.productActions}>
                     <button
-                      className="wish-btn"
+                      style={styles.actionBtn}
                       onClick={() => handleWishListToggle(product)}
+                      onMouseEnter={(e) =>
+                        (e.currentTarget.style.transform =
+                          "scale(1.15) rotate(10deg)")
+                      }
+                      onMouseLeave={(e) =>
+                        (e.currentTarget.style.transform = "scale(1)")
+                      }
                     >
                       <Heart
-                        size={20}
-                        fill={inWishlist ? "white" : "none"}
+                        size={18}
+                        fill={wishlisted ? "white" : "none"}
                         stroke="white"
                       />
                     </button>
                     <button
-                      className="cart-btn"
+                      style={styles.actionBtn}
                       onClick={() => handleAddToCart(product)}
                     >
                       <ShoppingCart size={20} />
@@ -186,50 +289,6 @@ export default function DesignsPage() {
             })
           )}
         </div>
-
-        {/* Modal */}
-        {showModal && selectedProduct && (
-          <div className="modal-backdrop" onClick={closeModal}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-              <div className="modal-carousel">
-                {selectedProduct.images.length > 1 && (
-                  <>
-                    <button className="carousel-btn left" onClick={prevImage}>
-                      <ChevronLeft size={24} />
-                    </button>
-                    <button className="carousel-btn right" onClick={nextImage}>
-                      <ChevronRight size={24} />
-                    </button>
-                  </>
-                )}
-                <img
-                  src={
-                    selectedProduct.images[activeImageIndex]
-                      ? selectedProduct.images[activeImageIndex].startsWith("http")
-                        ? selectedProduct.images[activeImageIndex]
-                        : `${BACKEND_URL}/${selectedProduct.images[activeImageIndex]}`
-                      : "https://via.placeholder.com/300x450?text=No+Image"
-                  }
-                  alt={selectedProduct.name}
-                  className="modal-image"
-                />
-              </div>
-              <div className="modal-info">
-                <h4>{selectedProduct.name}</h4>
-                <p>{selectedProduct.description}</p>
-                <p className="modal-price">₹{selectedProduct.price}</p>
-                <div className="modal-buttons">
-                  <button className="buy-now-btn" onClick={handleBuyNow}>
-                    Buy it now
-                  </button>
-                  <button className="close-modal-btn" onClick={closeModal}>
-                    Close
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </>
   );

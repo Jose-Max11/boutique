@@ -3,13 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { Heart, ShoppingCart } from "lucide-react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
-import { useCartWishlist } from "./CartWishlistContext"; // import your context
+import { useCartWishlist } from "./CartWishlistContext";
 
 function UserDashboard() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [products, setProducts] = useState([]);
-  const { addToCart, addToWishlist, removeFromWishlist, wishlist } = useCartWishlist(); // include remove
+  const [hovered, setHovered] = useState(false);
+  const { addToCart, addToWishlist, removeFromWishlist, wishlist } = useCartWishlist();
+const [recentlyViewed, setRecentlyViewed] = useState([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -28,7 +30,12 @@ function UserDashboard() {
     const fetchProducts = async () => {
       try {
         const res = await axios.get("http://localhost:5000/api/products");
-        setProducts(res.data);
+        const productsWithImages = res.data.map((p) => ({
+          ...p,
+          images: Array.isArray(p.images) && p.images.length > 0 ? p.images : p.image ? [p.image] : [],
+          currentImageIndex: 0,
+        }));
+        setProducts(productsWithImages);
       } catch (err) {
         console.error("Error fetching products:", err);
       }
@@ -37,6 +44,39 @@ function UserDashboard() {
     fetchUserData();
     fetchProducts();
   }, [navigate]);
+  const fetchRecentlyViewed = async () => {
+  try {
+    const token = localStorage.getItem("token");
+    const res = await axios.get("http://localhost:5000/user/recently-viewed", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    setRecentlyViewed(res.data.data);
+  } catch (err) {
+    console.error("Error fetching recently viewed:", err);
+  }
+};
+
+useEffect(() => {
+  fetchRecentlyViewed();
+}, []);
+
+
+  // Auto-rotate images every 3 seconds
+  useEffect(() => {
+    if (hovered) return;
+    const interval = setInterval(() => {
+      setProducts((prev) =>
+        prev.map((product) => {
+          if (product.images.length > 1) {
+            const nextIndex = (product.currentImageIndex + 1) % product.images.length;
+            return { ...product, currentImageIndex: nextIndex };
+          }
+          return product;
+        })
+      );
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [hovered]);
 
   const handleAddToCart = (product) => {
     addToCart(product);
@@ -54,8 +94,7 @@ function UserDashboard() {
   };
 
   const isInWishlist = (id) => wishlist.some((item) => item._id === id);
-
-  const goToProductPage = (product) => navigate(`/product/${product._id}`);
+  const goToProductPage = (product) => navigate(`/designs/${product._id}`);
 
   if (!user) {
     return (
@@ -67,204 +106,263 @@ function UserDashboard() {
 
   return (
     <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
-
-        html, body {
-          margin: 0;
-          padding: 0;
-          font-family: Poppins, sans-serif;
-          font-weight : 900;
-          background-size: cover;
-        }
-
-        .dashboard-container {
-          display: flex;
-          flex-direction: column;
-          width: 100%;
-          padding-top: 80px;
-          box-sizing: border-box;
-          overflow-y: auto;
-          background: transparent;
-        }
-
-        .dashboard-header {
-          background: url("/images/userbg.jpg") no-repeat center center;
-          background-size: cover;
-          position: relative;
-          width: 80%;
-          max-width: 600px;
-          margin: 20px auto;
-          border-radius: 20px;
-          padding: 80px 30px;
-          min-height: 300px;
-          text-align: center;
-          box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
-          font-family: 'Roboto Slab', 'Poppins', sans-serif;
-          font-weight : 900;
-          color: #fff;
-        }
-
-        .dashboard-header h1, .dashboard-header p {
-          position: relative;
-          z-index: 1;
-        }
-
-        .dashboard-header:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 15px 35px;
-        }
-
-        .dashboard-header h1 {
-          font-size: 2rem;
-          font-weight: 700;
-          margin-bottom: 10px;
-          text-shadow: 0 3px 8px;
-        }
-
-        .dashboard-header p {
-          font-size: 1rem;
-          font-weight: 400;
-          letter-spacing: 0.5px;
-          text-shadow: 0 2px 6px rgba(141, 141, 141, 0.4);
-        }
-
-        .products-grid { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; padding:0 20px 20px; }
-
-        .product-card { 
-          border:1px solid #ccc; 
-          border-radius:8px; 
-          width:250px; 
-          text-align:center; 
-          background:#fff; 
-          transition:0.3s; 
-          display:flex; 
-          flex-direction:column; 
-          justify-content:flex-start; 
-          overflow:hidden; 
-          position:relative; 
-          box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .product-card:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        }
-
-        .product-card img { width:100%; height:280px; object-fit:cover; cursor:pointer; }
-        .product-info { padding:10px; flex-grow:1; }
-        .product-info h3 { font-size:1.1rem; margin-bottom:5px; font-weight:600; }
-        .product-info p { font-size:0.9rem; margin:2px 0; color:#555; }
-
-        .product-actions { display:flex; justify-content:space-between; align-items:center; padding:0 10px 10px; }
-
-        .add-to-cart {
-          background: linear-gradient(135deg, #c95f7b, #b95771ff);
-          color: white;
-          border: none;
-          padding: 8px 14px;
-          border-radius: 30px;
-          cursor: pointer;
-          font-size: 0.9rem;
-          font-weight: 500;
-          transition: all 0.3s ease-in-out;
-          box-shadow: 0 4px 10px rgba(201, 95, 123, 0.3);
-          display:flex;
-          align-items:center;
-          gap:5px;
-        }
-        .add-to-cart:hover {
-          background: linear-gradient(135deg, #b04f6b, #d67691);
-          transform: scale(1.05);
-          box-shadow: 0 6px 14px rgba(201, 95, 123, 0.5);
-        }
-
-        .heart-btn {
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: linear-gradient(135deg, #c95f7b, #cf6783ff);
-          box-shadow: 0 4px 10px rgba(201, 95, 123, 0.4);
-          cursor: pointer;
-          border: none;
-          outline: none;
-          transition: transform 0.2s ease;
-        }
-        .heart-btn:hover {
-          transform: scale(1.15) rotate(10deg);
-          box-shadow: 0 6px 14px rgba(201, 95, 123, 0.6);
-        }
-        .heart-btn svg { transition: fill 0.3s ease, transform 0.3s ease; }
-
-        @media (max-width:768px){ 
-          .product-card{ width:180px;} 
-          .product-card img{ height:220px;} 
-          .dashboard-header { width: 90%; padding: 40px 20px; }
-        }
-        @media (max-width:480px){ 
-          .product-card{ width:150px;} 
-          .product-card img{ height:170px;} 
-          .dashboard-header { width: 95%; padding: 30px 15px; }
-        }
-      `}</style>
-
       <Navbar />
 
-      <div className="dashboard-container">
-        <div className="dashboard-header">
+      <div style={{ paddingTop: "80px" }}>
+        {/* Dashboard Header */}
+        <div style={{
+          background: 'url("/images/userbg.jpg") no-repeat center center',
+          backgroundSize: 'cover',
+          width: "80%",
+          maxWidth: "600px",
+          margin: "20px auto",
+          borderRadius: "20px",
+          padding: "80px 30px",
+          minHeight: "300px",
+          textAlign: "center",
+          color: "#fff",
+          boxShadow: "0 10px 25px rgba(0,0,0,0.3)",
+        }}>
           <h1>Welcome, {user.name} 👋</h1>
           <p>{user.email}</p>
         </div>
 
-        <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
-         <strong> Your Recommended Products</strong>
+        <h2 style={{ textAlign: "center", margin: "20px 0" }}>
+          <strong>Your Recommended Products</strong>
         </h2>
 
-        <div className="products-grid">
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", justifyContent: "center", padding: "0 20px 20px" }}>
           {products.length === 0 ? (
             <p>No products available.</p>
           ) : (
-            products.map((prod) => (
-              <div className="product-card" key={prod._id}>
-                {prod.image && (
-                  <img
-                    src={`http://localhost:5000/${prod.image}`}
-                    alt={prod.name}
-                    onClick={() => goToProductPage(prod)}
-                  />
-                )}
-                <div className="product-info">
-                  <h3>{prod.name}</h3>
-                  <p>{prod.category?.name || "Uncategorized"}</p>
-                  <p>₹{prod.price}</p>
-                </div>
-                <div className="product-actions">
-                  <button
-                    className="add-to-cart"
-                    onClick={() => handleAddToCart(prod)}
-                  >
-                    <ShoppingCart size={18} /> Add to Cart
-                  </button>
+            products.map((prod) => {
+              const images = prod.images.length
+                ? prod.images.map((img) => (img.startsWith("http") ? img : `http://localhost:5000/${img}`))
+                : ["https://via.placeholder.com/250x280?text=No+Image"];
+              const currentImage = images[prod.currentImageIndex];
+              const inWishlist = isInWishlist(prod._id);
 
-                  <button
-                    className="heart-btn"
-                    onClick={() => handleWishlistToggle(prod)}
+              return (
+                <div
+                  key={prod._id}
+                  style={{
+                    border: "1px solid #ccc",
+                    borderRadius: "15px",
+                    width: "250px",
+                    textAlign: "center",
+                    background: "#fff",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "flex-start",
+                    overflow: "hidden",
+                    position: "relative",
+                    boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
+                    cursor: "pointer",
+                    transition: "transform 0.3s, box-shadow 0.3s",
+                  }}
+                  onMouseEnter={() => setHovered(true)}
+                  onMouseLeave={() => setHovered(false)}
+                >
+                  <div
+                    style={{ position: "relative", width: "100%", height: "280px", overflow: "hidden" }}
+                    onClick={() => goToProductPage(prod)}
                   >
-                    <Heart
-                      size={18}
-                      fill={isInWishlist(prod._id) ? "white" : "none"}
-                      stroke="white"
+                    <img
+                      src={currentImage}
+                      alt={prod.name}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.4s" }}
+                      onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.05)"}
+                      onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
                     />
-                  </button>
+                    {images.length > 1 && (
+                      <div style={{
+                        position: "absolute",
+                        bottom: "8px",
+                        right: "8px",
+                        background: "rgba(26,42,108,0.8)",
+                        color: "#fff",
+                        fontSize: "12px",
+                        padding: "2px 6px",
+                        borderRadius: "12px",
+                        zIndex: 5,
+                      }}>
+                        {prod.currentImageIndex + 1}/{images.length}
+                      </div>
+                    )}
+                  </div>
+
+                  <div style={{ padding: "10px", flexGrow: 1 }}>
+                    <h3 style={{ fontSize: "1.1rem", marginBottom: "5px", fontWeight: 600 }}>{prod.name}</h3>
+                    <p>{prod.category?.name || "Uncategorized"}</p>
+                    <p>₹{prod.price}</p>
+                  </div>
+
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 10px 10px" }}>
+                    <button
+                      style={{
+                        background: "linear-gradient(135deg, #c95f7b, #b95771ff)",
+                        color: "white",
+                        border: "none",
+                        padding: "8px 14px",
+                        borderRadius: "30px",
+                        cursor: "pointer",
+                        fontSize: "0.9rem",
+                        fontWeight: 500,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "5px",
+                      }}
+                      onClick={() => handleAddToCart(prod)}
+                    >
+                      <ShoppingCart size={18} /> Add to Cart
+                    </button>
+
+                    <button
+                      style={{
+                        width: "40px",
+                        height: "40px",
+                        borderRadius: "50%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        background: "linear-gradient(135deg, #c95f7b, #cf6783ff)",
+                        boxShadow: "0 4px 10px rgba(201, 95, 123, 0.4)",
+                        cursor: "pointer",
+                        border: "none",
+                        outline: "none",
+                        transition: "transform 0.3s",
+                      }}
+                      onClick={() => handleWishlistToggle(prod)}
+                      onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.15) rotate(10deg)"}
+                      onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+                    >
+                      <Heart size={18} fill={inWishlist ? "white" : "none"} stroke="white" />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))
+              );
+            })
           )}
         </div>
+       {recentlyViewed.length > 0 && (
+  <>
+    <h2 style={{ textAlign: "center", margin: "20px 0" }}>
+      <strong>Recently Viewed Products</strong>
+    </h2>
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "20px",
+        justifyContent: "center",
+        padding: "0 20px 20px",
+      }}
+    >
+      {recentlyViewed.map((prod) => {
+        const images = prod.images?.length
+          ? prod.images.map((img) => (img.startsWith("http") ? img : `http://localhost:5000/${img}`))
+          : prod.image
+          ? [prod.image.startsWith("http") ? prod.image : `http://localhost:5000/${prod.image}`]
+          : ["https://via.placeholder.com/250x280?text=No+Image"];
+        const currentImage = images[0]; // single image for recently viewed
+        const inWishlist = isInWishlist(prod.productId || prod._id);
+
+        return (
+          <div
+            key={prod.productId}
+            style={{
+              border: "1px solid #ccc",
+              borderRadius: "15px",
+              width: "250px",
+              textAlign: "center",
+              background: "#fff",
+              overflow: "hidden",
+              boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
+              cursor: "pointer",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-start",
+              transition: "transform 0.3s, box-shadow 0.3s",
+            }}
+            onClick={() => goToProductPage({ _id: prod.productId })}
+          >
+            <div style={{ position: "relative", width: "100%", height: "280px", overflow: "hidden" }}>
+              <img
+                src={currentImage}
+                alt={prod.name}
+                style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.4s" }}
+                onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+                onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+              />
+            </div>
+
+            <div style={{ padding: "10px", flexGrow: 1 }}>
+              <h3 style={{ fontSize: "1.1rem", marginBottom: "5px", fontWeight: 600 }}>{prod.name}</h3>
+              <p>₹{prod.price}</p>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "0 10px 10px",
+              }}
+            >
+              <button
+                style={{
+                  background: "linear-gradient(135deg, #c95f7b, #b95771ff)",
+                  color: "white",
+                  border: "none",
+                  padding: "8px 14px",
+                  borderRadius: "30px",
+                  cursor: "pointer",
+                  fontSize: "0.9rem",
+                  fontWeight: 500,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "5px",
+                }}
+                onClick={(e) => {
+                  e.stopPropagation(); // prevent navigation
+                  handleAddToCart({ _id: prod.productId, ...prod });
+                }}
+              >
+                <ShoppingCart size={18} /> Add to Cart
+              </button>
+
+              <button
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  background: "linear-gradient(135deg, #c95f7b, #cf6783ff)",
+                  boxShadow: "0 4px 10px rgba(201, 95, 123, 0.4)",
+                  cursor: "pointer",
+                  border: "none",
+                  outline: "none",
+                  transition: "transform 0.3s",
+                }}
+                onClick={(e) => {
+                  e.stopPropagation(); // prevent navigation
+                  handleWishlistToggle({ _id: prod.productId, ...prod });
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.15) rotate(10deg)")}
+                onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+              >
+                <Heart size={18} fill={inWishlist ? "white" : "none"} stroke="white" />
+              </button>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </>
+)}
+
       </div>
     </>
   );

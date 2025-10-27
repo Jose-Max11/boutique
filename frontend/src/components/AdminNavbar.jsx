@@ -12,7 +12,10 @@ import {
   LogOut,
   Menu,
   X,
-  Bell
+  Bell,
+  DollarSign,
+  CreditCard,
+  Wallet
 } from "lucide-react";
 import axios from "axios";
 import "./AdminNavbar.css";
@@ -31,7 +34,9 @@ function AdminNavbar() {
         const res = await axios.get("http://localhost:5000/api/admin/orders", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        const pending = res.data.orders.filter(order => order.status === "pending");
+        const pending = res.data.orders.filter(
+          (order) => order.status === "pending"
+        );
         setPendingOrders(pending);
       } catch (err) {
         console.error(err);
@@ -56,7 +61,9 @@ function AdminNavbar() {
       element.scrollIntoView({ behavior: "smooth", block: "center" });
       // temporary highlight
       element.style.backgroundColor = "#ffe3ec";
-      setTimeout(() => { element.style.backgroundColor = ""; }, 2000);
+      setTimeout(() => {
+        element.style.backgroundColor = "";
+      }, 2000);
     }
   };
 
@@ -65,31 +72,70 @@ function AdminNavbar() {
       <nav className="admin-navbar">
         <div className="navbar-logo">Jose Admin</div>
 
-        <div className="mobile-menu-icon" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+        <div
+          className="mobile-menu-icon"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </div>
 
         <ul className={`navbar-links ${isMobileMenuOpen ? "mobile-open" : ""}`}>
-          <li onClick={() => navigate("/admin/dashboard")}><Home size={18} /> Dashboard</li>
-          <li onClick={() => navigate("/admin/products")}><Box size={18} /> Products</li>
-          <li onClick={() => navigate("/admin/categories")}><Box size={18} /> Categories</li>
-          <li onClick={() => navigate("/admin/sales")}><ShoppingCart size={18} /> Orders</li>
-          <li onClick={() => navigate("/admin/customers")}><Users size={18} /> Customers</li>
-          <li onClick={() => navigate("/admin/suppliers")}><Truck size={18} /> Suppliers</li>
-          <li onClick={() => navigate("/admin/reports")}><BarChart2 size={18} /> Reports</li>
-          <li onClick={() => navigate("/admin/designers")}><User size={18} /> Designers</li>
-          <li onClick={() => navigate("/admin/settings")}><Settings size={18} /> Settings</li>
+          <li onClick={() => navigate("/admin/dashboard")}>
+            <Home size={18} /> Dashboard
+          </li>
+          <li onClick={() => navigate("/admin/products")}>
+            <Box size={18} /> Products
+          </li>
+          <li onClick={() => navigate("/admin/categories")}>
+            <Box size={18} /> Categories
+          </li>
+          <li onClick={() => navigate("/admin/sales")}>
+            <ShoppingCart size={18} /> Orders
+          </li>
+          <li onClick={() => navigate("/admin/customers")}>
+            <Users size={18} /> Customers
+          </li>
+          <li onClick={() => navigate("/admin/suppliers")}>
+            <Truck size={18} /> Suppliers
+          </li>
+          <li onClick={() => navigate("/admin/reports")}>
+            <BarChart2 size={18} /> Reports
+          </li>
+          <li onClick={() => navigate("/admin/designers")}>
+            <User size={18} /> Designers
+          </li>
+
+          {/* 🌸 New Revenue Pages Section */}
+          <li onClick={() => navigate("/admin/revenue-dashboard")}>
+            <DollarSign size={18} /> Admin Revenue
+          </li>
+          <li onClick={() => navigate("/admin/supplier-revenue")}>
+            <CreditCard size={18} /> Supplier Revenue
+          </li>
+          <li onClick={() => navigate("/admin/orders")}>
+            <Wallet size={18} /> Manage Revenue
+          </li>
+
+          <li onClick={() => navigate("/admin/settings")}>
+            <Settings size={18} /> Settings
+          </li>
         </ul>
 
         {/* Notification Bell */}
-        <div className="navbar-bell" onClick={() => setShowDropdown(!showDropdown)} title="Pending Orders">
+        <div
+          className="navbar-bell"
+          onClick={() => setShowDropdown(!showDropdown)}
+          title="Pending Orders"
+        >
           <Bell size={20} />
-          {pendingOrders.length > 0 && <span className="notification-badge">{pendingOrders.length}</span>}
+          {pendingOrders.length > 0 && (
+            <span className="notification-badge">{pendingOrders.length}</span>
+          )}
 
           {showDropdown && pendingOrders.length > 0 && (
             <div className="bell-dropdown">
               <h4>Pending Orders</h4>
-              {pendingOrders.map(order => (
+              {pendingOrders.map((order) => (
                 <div
                   key={order._id}
                   className="dropdown-item"

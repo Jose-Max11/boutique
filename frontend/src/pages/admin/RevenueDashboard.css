@@ -1,0 +1,223 @@
+/* 🌸 Overall Layout */
+.revenue-dashboard {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 30px 25px;
+  background: #fff5f7;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(201, 95, 123, 0.15);
+  font-family: "Poppins", sans-serif;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+/* 🌷 Heading */
+.revenue-dashboard h2 {
+  font-size: 32px;
+  color: #c95f7b;
+  font-weight: 700;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 2px rgba(201, 95, 123, 0.3);
+}
+
+/* 💳 Total Revenue Card */
+.total-revenue-card {
+  background: linear-gradient(135deg, #ffb6c1, #c95f7b);
+  color: white;
+  border-radius: 18px;
+  padding: 25px 35px;
+  margin-bottom: 30px;
+  box-shadow: 0 5px 20px rgba(201, 95, 123, 0.25);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.total-revenue-card:hover {
+  transform: scale(1.05);
+}
+
+.total-revenue-card h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.total-revenue-card p {
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* 📊 Revenue Table */
+.revenue-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: #fff;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  margin-top: 20px;
+  transition: all 0.3s ease;
+}
+
+.revenue-table th,
+.revenue-table td {
+  padding: 16px 18px;
+  text-align: center;
+  border-bottom: 1px solid #f2f2f2;
+  transition: all 0.3s ease;
+}
+
+.revenue-table th {
+  background: linear-gradient(90deg, #c95f7b, #ff9bb3);
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 15px;
+}
+
+.revenue-table tr:nth-child(even) {
+  background-color: #fff0f5;
+}
+
+.revenue-table tr:hover {
+  background-color: #ffe6ef;
+  transform: scale(1.01);
+}
+
+/* 💵 Status Colors */
+.revenue-table td:nth-child(4) {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.revenue-table td:nth-child(4):contains("Collected") {
+  color: #5bc0de;
+}
+
+.revenue-table td:nth-child(4):contains("Paid") {
+  color: #5cb85c;
+}
+
+.revenue-table td:nth-child(4):contains("Pending") {
+  color: #f0ad4e;
+}
+
+/* 🩷 Action Buttons */
+.action-btn {
+  background: linear-gradient(135deg, #c95f7b, #ffb6c1);
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(201, 95, 123, 0.3);
+}
+
+.action-btn:hover {
+  background: linear-gradient(135deg, #b84e6d, #ff98ae);
+  transform: translateY(-2px);
+}
+
+/* ❌ No Data Message */
+.no-data {
+  background: #fff0f5;
+  color: #c95f7b;
+  font-weight: 500;
+  padding: 18px;
+  border-radius: 12px;
+  margin-top: 25px;
+  box-shadow: 0 3px 10px rgba(201, 95, 123, 0.1);
+  display: inline-block;
+}
+
+/* 🪞 Responsive Design */
+@media (max-width: 992px) {
+  .revenue-dashboard {
+    padding: 20px;
+  }
+
+  .revenue-dashboard h2 {
+    font-size: 26px;
+  }
+
+  .total-revenue-card {
+    padding: 20px;
+  }
+
+  .revenue-table th,
+  .revenue-table td {
+    padding: 12px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .revenue-table {
+    display: inline-block;
+    min-width: 600px;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .revenue-table::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .revenue-table::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+  }
+}
+/* 💹 Chart Section */
+.chart-section {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.chart-card {
+  background: white;
+  border-radius: 18px;
+  padding: 20px 25px;
+  box-shadow: 0 5px 15px rgba(201, 95, 123, 0.15);
+  flex: 1;
+  min-width: 350px;
+  max-width: 550px;
+  transition: all 0.3s ease;
+}
+
+.chart-card:hover {
+  transform: translateY(-5px);
+}
+
+.chart-card h3 {
+  color: #de0740;
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.bar-chart-section {
+  margin-top: 3rem;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(201, 95, 123, 0.15);
+  padding: 1.5rem;
+}
+
+.bar-chart-section h3 {
+  text-align: center;
+  color: #de0740;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}

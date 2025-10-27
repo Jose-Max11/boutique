@@ -32,6 +32,10 @@ const orderSchema = new mongoose.Schema(
       pincode: { type: String, required: true },
       nearby: { type: String },
     },
+    supplierId: { type: mongoose.Schema.Types.ObjectId, ref: "Supplier" },
+paymentStatus: { type: String, enum: ["unpaid", "paid"], default: "unpaid" },
+deliveredDate: { type: Date },
+
     // ✅ NEW FIELDS
     orderDate: {
       type: Date,

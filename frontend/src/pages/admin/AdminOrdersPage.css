@@ -2,41 +2,62 @@
 .admin-orders-container {
   max-width: 1200px;
   margin: 20px auto;
-  padding: 20px;
+  padding: 25px 20px;
   background: #fff5f7;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* center content horizontally */
 }
 
 /* Heading */
 .admin-orders-container h2 {
   color: #c95f7b;
-  font-size: 28px;
-  margin-bottom: 20px;
+  font-size: 30px;
+  margin-bottom: 25px;
   text-align: center;
+  font-weight: 700;
+}
+
+/* Table Wrapper to allow scroll and centering */
+.orders-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  display: flex;
+  justify-content: center; /* center table horizontally */
 }
 
 /* Table */
 .orders-table {
   width: 100%;
-  border-collapse: collapse;
+  max-width: 1200px; /* ensures it fits within container */
+  border-collapse: separate;
+  border-spacing: 0;
   background-color: #fff;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  min-width: 700px; /* ensures horizontal scroll on very small screens */
 }
 
 .orders-table th,
 .orders-table td {
-  padding: 12px 15px;
+  padding: 14px 18px;
   text-align: left;
   vertical-align: middle;
+  transition: all 0.3s ease;
 }
 
 .orders-table th {
-  background-color: #c95f7b;
+  background: linear-gradient(90deg, #c95f7b, #ff9bb3);
   color: #fff;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .orders-table tr {
@@ -44,53 +65,43 @@
 }
 
 .orders-table tr:nth-child(even) {
-  background-color: #fff0f3;
+  background-color: #fff0f5;
 }
 
 .orders-table tr:hover {
-  background-color: #ffe3ec;
+  background-color: #ffe6f0;
+  transform: scale(1.01);
 }
 
 /* Select dropdown */
 .orders-table select {
-  padding: 6px 10px;
-  border-radius: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
   border: 1px solid #ccc;
   background-color: #fff;
   color: #333;
   cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  transition: all 0.3s ease;
 }
 
 .orders-table select:focus {
   outline: none;
   border-color: #c95f7b;
-  box-shadow: 0 0 5px rgba(201, 95, 123, 0.5);
-}
-
-/* No orders text */
-.admin-orders-container p {
-  text-align: center;
-  font-size: 18px;
-  color: #999;
-  margin-top: 40px;
-}
-
-/* Loading */
-.admin-orders-container div {
-  text-align: center;
-  font-size: 18px;
-  color: #c95f7b;
+  box-shadow: 0 0 8px rgba(201, 95, 123, 0.3);
 }
 
 /* Status badges */
 .status-badge {
   display: inline-block;
-  padding: 5px 10px;
-  border-radius: 6px;
+  padding: 6px 12px;
+  border-radius: 12px;
   color: #fff;
   font-weight: 500;
   text-transform: capitalize;
   font-size: 14px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .badge-pending { background-color: #f0ad4e; }
@@ -103,31 +114,36 @@
 @media (max-width: 992px) {
   .orders-table th,
   .orders-table td {
-    padding: 10px;
+    padding: 12px;
     font-size: 14px;
   }
 
   .admin-orders-container h2 {
-    font-size: 24px;
+    font-size: 26px;
   }
 }
 
 /* Responsive: Mobile */
 @media (max-width: 768px) {
   .admin-orders-container {
-    padding: 10px;
+    padding: 15px 10px;
+  }
+
+  .orders-table-wrapper {
+    width: 100%;
   }
 
   .orders-table {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    display: inline-block;
+    min-width: 600px; /* allows scroll */
+    max-width: 100%;
   }
 
   .orders-table th,
   .orders-table td {
     white-space: nowrap;
+    padding: 10px 12px;
+    font-size: 13px;
   }
 
   /* Optional: add some padding for scroll hint */

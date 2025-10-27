@@ -13,20 +13,82 @@ export const getDesigners = async (req, res) => {
 // Add designer
 export const addDesigner = async (req, res) => {
   try {
-    const { name, email, phone, speciality, experience, bio, status } = req.body;
-
-    if (!name || !email) {
-      return res.status(400).json({ message: "Name and Email are required" });
-    }
-
-    const designer = new Designer({
+    const {
+      designerId,
       name,
       email,
       phone,
       speciality,
       experience,
       bio,
+      skills,
+      services,
+      certifications,
+      languages,
+      hourly_rate,
+      address,
+      city,
+      state,
+      pincode,
+      country,
+      social_links,
+      portfolioImages,
+      designsCreated,
+      completedOrders,
+      pendingOrders,
+      averageRating,
+      reviews,
+      paymentMode,
+      bankName,
+      acc_no,
+      ifscCode,
+      upi_id,
+      status,
+      availability,
+      joinedDate,
+      notes,
+      remarks
+    } = req.body;
+
+    if (!name || !email) {
+      return res.status(400).json({ message: "Name and Email are required" });
+    }
+
+    const designer = new Designer({
+      designerId,
+      name,
+      email,
+      phone,
+      speciality,
+      experience,
+      bio,
+      skills,
+      services,
+      certifications,
+      languages,
+      hourly_rate,
+      address,
+      city,
+      state,
+      pincode,
+      country,
+      social_links,
+      portfolioImages,
+      designsCreated,
+      completedOrders,
+      pendingOrders,
+      averageRating,
+      reviews,
+      paymentMode,
+      bankName,
+      acc_no,
+      ifscCode,
+      upi_id,
       status: status || "active",
+      availability,
+      joinedDate,
+      notes,
+      remarks,
       profile_image: req.file ? req.file.path : null,
     });
 
@@ -40,8 +102,7 @@ export const addDesigner = async (req, res) => {
 // Update designer
 export const updateDesigner = async (req, res) => {
   try {
-    const { name, email, phone, speciality, experience, bio, status } = req.body;
-    const updateData = { name, email, phone, speciality, experience, bio, status };
+    const updateData = { ...req.body };
 
     if (req.file) updateData.profile_image = req.file.path;
 

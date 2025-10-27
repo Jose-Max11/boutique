@@ -7,6 +7,14 @@ const userSchema = new mongoose.Schema({
   password: { type: String }, // optional for Google users
   googleId: { type: String }, // store Google ID
   role: { type: String, enum: ["admin", "user"], default: "user" },
+  
+  // Add this field
+  recentlyViewed: [
+    {
+      productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+      viewedAt: { type: Date, default: Date.now },
+    },
+  ],
 }, { timestamps: true });
 
 export default mongoose.model("User", userSchema);

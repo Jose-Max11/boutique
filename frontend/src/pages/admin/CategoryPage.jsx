@@ -10,7 +10,6 @@ function CategoryPage() {
 
   const fetchCategories = async () => {
     const res = await axios.get("http://localhost:5000/api/categories");
-    // Sort categories alphabetically by name
     const sorted = res.data.sort((a, b) =>
       a.name.localeCompare(b.name, "en", { sensitivity: "base" })
     );
@@ -49,30 +48,29 @@ function CategoryPage() {
     }
   };
 
-  // Filter + prioritize search results
   const filteredCategories = [...categories]
-    .filter((cat) =>
-      cat.name.toLowerCase().includes(search.toLowerCase())
-    )
+    .filter((cat) => cat.name.toLowerCase().includes(search.toLowerCase()))
     .sort((a, b) => a.name.localeCompare(b.name, "en", { sensitivity: "base" }));
 
   return (
     <div className="category-container">
-      <h2 className="page-title">Category Management</h2>
+      <h2 className="page-title">💎 Category Management</h2>
 
-      {/* Search Bar */}
-      <div className="search-container">
-        <Search className="search-icon" size={20} />
-        <input
-          type="text"
-          placeholder="Search Category..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="search-input"
-        />
+      {/* 🌸 Centered Search Bar */}
+      <div className="search-wrapper">
+        <div className="search-container">
+          <Search className="search-icon" size={20} />
+          <input
+            type="text"
+            placeholder="Search Category..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="search-input"
+          />
+        </div>
       </div>
 
-      {/* Form */}
+      {/* 🌷 Form */}
       <form onSubmit={handleSubmit} className="category-form">
         <div className="input-group">
           <label>Category Name</label>
@@ -88,7 +86,7 @@ function CategoryPage() {
           <label>Description</label>
           <input
             type="text"
-            placeholder="Enter category description"
+            placeholder="Enter description"
             value={form.description}
             onChange={(e) => setForm({ ...form, description: e.target.value })}
           />
@@ -98,7 +96,7 @@ function CategoryPage() {
         </button>
       </form>
 
-      {/* Table */}
+      {/* 🌼 Table */}
       <div className="table-wrapper">
         <table className="category-table">
           <thead>
@@ -125,7 +123,7 @@ function CategoryPage() {
             ))}
             {filteredCategories.length === 0 && (
               <tr>
-                <td colSpan="3" style={{ textAlign: "center", color: "#555" }}>
+                <td colSpan="3" className="no-data">
                   No categories found.
                 </td>
               </tr>
@@ -134,163 +132,178 @@ function CategoryPage() {
         </table>
       </div>
 
-      {/* Inline Styles */}
+      {/* ✨ Elegant Styles */}
       <style>{`
         .category-container {
-          max-width: 900px;
-          margin: 50px auto;
-          padding: 35px;
-          background: #111129ff;
-          border-radius: 20px;
-          box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+          max-width: 1000px;
+          margin: 60px auto;
+          padding: 45px;
+          border-radius: 25px;
+          background: linear-gradient(145deg, #fff5f7, #ffe8ee);
+          box-shadow: 0 8px 25px rgba(201, 95, 123, 0.25);
           font-family: "Poppins", sans-serif;
-          color: #fff;
+          color: #444;
         }
 
         .page-title {
           text-align: center;
-          font-size: 32px;
+          font-size: 36px;
+          color: #c95f7b;
           font-weight: 700;
-          color: #fff;
-          margin-bottom: 30px;
+          margin-bottom: 35px;
+          letter-spacing: 1px;
+          text-shadow: 1px 1px 3px rgba(201, 95, 123, 0.3);
         }
 
-        /* Search bar */
+        /* 🌸 Centered Search Bar */
+        .search-wrapper {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 35px;
+        }
         .search-container {
           position: relative;
-          width: 100%;
-          margin-bottom: 30px;
+          width: 70%;
+          max-width: 500px;
         }
-
         .search-icon {
           position: absolute;
           top: 50%;
-          left: 10px;
+          left: 12px;
           transform: translateY(-50%);
-          color: #fff;
+          color: #c95f7b;
         }
-
         .search-input {
           width: 100%;
-          padding: 10px 40px;
-          border: none;
-          border-bottom: 2px solid #fff;
-          background: transparent;
-          color: #fff;
+          padding: 12px 40px;
+          border-radius: 15px;
+          border: 1px solid #f2c3d0;
           font-size: 16px;
           outline: none;
-          transition: all 0.3s ease;
+          transition: 0.3s ease;
+          background-color: #fff;
         }
-
-        .search-input::placeholder {
-          color: rgba(255, 255, 255, 0.6);
-        }
-
         .search-input:focus {
-          border-color: #ffffffff;
+          border-color: #c95f7b;
+          box-shadow: 0 0 8px rgba(201, 95, 123, 0.3);
         }
 
-        /* Form */
+        /* 🌷 Form */
         .category-form {
           display: grid;
           grid-template-columns: 1fr 1fr auto;
-          gap: 20px;
-          align-items: end;
+          gap: 25px;
           margin-bottom: 40px;
+          align-items: end;
         }
-
         .input-group label {
-          display: block;
-          font-size: 14px;
+          font-weight: 500;
+          color: #c95f7b;
           margin-bottom: 6px;
-          color: #cfcfcf;
+          display: block;
         }
-
         .input-group input {
           width: 100%;
-          padding: 10px;
-          background: transparent;
-          border: none;
-          border-bottom: 2px solid #fff;
-          color: #fff;
+          padding: 12px;
+          border-radius: 12px;
+          border: 1px solid #f2c3d0;
           outline: none;
+          background: #fff;
           transition: 0.3s;
         }
-
-        .input-group input::placeholder {
-          color: rgba(255,255,255,0.5);
-        }
-
         .input-group input:focus {
-          border-color: #ffffffff;
+          border-color: #c95f7b;
+          box-shadow: 0 0 5px rgba(201, 95, 123, 0.2);
         }
 
+        /* 💖 Button */
         .btn-icon {
-          background: #22223cff;
+          background: linear-gradient(135deg, #c95f7b, #ff9bb3);
           border: none;
-          padding: 10px 16px;
           border-radius: 50%;
+          padding: 12px;
+          color: white;
           cursor: pointer;
-          transition: 0.3s;
-          color: #fff;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 10px rgba(201, 95, 123, 0.3);
         }
-
         .btn-icon:hover {
           transform: scale(1.1);
-          background: #111129ff;
+          background: linear-gradient(135deg, #b84b6b, #ff8ea8);
         }
 
+        /* 🌺 Table */
         .table-wrapper {
           overflow-x: auto;
+          border-radius: 20px;
+          margin-top: 15px;
         }
-
         .category-table {
           width: 100%;
           border-collapse: collapse;
-          border-radius: 15px;
+          background: #fff;
+          border-radius: 20px;
           overflow: hidden;
-          background: #ffffff;
-          color: #000;
         }
-
-        .category-table th, .category-table td {
-          padding: 15px 20px;
-          font-size: 16px;
-          border-bottom: 1px solid #ddd;
-        }
-
         .category-table th {
-          background: #08172dff;
-          color: #fff;
-          font-weight: 600;
+          background: linear-gradient(90deg, #c95f7b, #ff9bb3);
+          color: white;
           text-align: left;
+          padding: 15px 18px;
+          font-weight: 600;
+          font-size: 16px;
+        }
+        .category-table td {
+          padding: 15px 18px;
+          border-bottom: 1px solid #f9d6de;
+        }
+        .category-table tr:nth-child(even) {
+          background: #fff5f8;
+        }
+        .category-table tr:hover {
+          background: #ffe6ef;
+          transition: 0.3s;
         }
 
+        /* 🎨 Actions */
         .actions {
           display: flex;
           justify-content: center;
           gap: 12px;
         }
-
         .icon-btn {
           background: none;
           border: none;
           cursor: pointer;
-          padding: 5px;
-          transition: 0.3s;
+          transition: 0.3s ease;
         }
-
+        .icon-btn.edit svg {
+          color: #c95f7b;
+        }
         .icon-btn.edit:hover svg {
-          color: #1247a3ff;
+          color: #a13f60;
+          transform: scale(1.1);
         }
-
+        .icon-btn.delete svg {
+          color: #d9534f;
+        }
         .icon-btn.delete:hover svg {
-          color: #c22121ff;
+          color: #b52a2a;
+          transform: scale(1.1);
         }
 
-        @media (max-width: 600px) {
+        .no-data {
+          text-align: center;
+          padding: 20px;
+          color: #777;
+        }
+
+        @media (max-width: 700px) {
           .category-form {
             grid-template-columns: 1fr;
+          }
+          .search-container {
+            width: 90%;
           }
         }
       `}</style>

@@ -1,10 +1,10 @@
-/* Container */
+/* ========== Container ========== */
 .designs-page-container {
   padding: 32px;
   background-color: #fff5f7;
 }
 
-/* Product Cards Grid */
+/* ========== Product Cards Grid ========== */
 .designs-page-container .product-card-list {
   display: flex;
   flex-wrap: wrap;
@@ -12,7 +12,7 @@
   justify-content: center;
 }
 
-/* Single Product Card */
+/* ========== Single Product Card ========== */
 .designs-page-container .product-card {
   background: #fff;
   box-shadow: 0 4px 20px rgba(0,0,0,0.05);
@@ -24,114 +24,132 @@
   padding: 12px;
   transition: 0.3s;
 }
-
 .designs-page-container .product-card:hover {
   box-shadow: 0 8px 28px rgba(0,0,0,0.08);
   transform: translateY(-3px);
 }
 
-/* Image Box */
+/* ========== Image Box ========== */
 .designs-page-container .product-image-box {
   width: 100%;
   margin-bottom: 12px;
   cursor: pointer;
-  position: relative; /* for badges and offer */
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
 }
-
 .designs-page-container .product-image {
   width: 100%;
   height: 280px;
   object-fit: cover;
   border-radius: 12px;
+  transition: transform 0.3s;
+}
+.designs-page-container .product-card:hover .product-image {
+  transform: scale(1.05);
 }
 
-/* Offer Badge */
+/* ========== Offer Badge ========== */
 .designs-page-container .offer-badge {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 8px;
+  left: 8px;
   background: #c95f7b;
   color: #fff;
-  font-size: 13px;
-  padding: 4px 8px;
-  border-radius: 8px;
+  font-size: 12px;
+  padding: 3px 7px;
+  border-radius: 6px;
   font-weight: 500;
+  z-index: 5;
 }
 
-/* Carousel Indicator */
+/* ========== Carousel Arrows ========== */
+.designs-page-container .carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.45);
+  border: none;
+  padding: 6px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  color: #fff;
+  transition: 0.2s;
+}
+.designs-page-container .carousel-btn:hover {
+  background: rgba(0,0,0,0.65);
+}
+.designs-page-container .carousel-btn.left { left: 8px; }
+.designs-page-container .carousel-btn.right { right: 8px; }
+
+/* ========== Carousel Indicator ========== */
 .designs-page-container .carousel-indicator {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  background: rgba(0,0,0,0.5);
+  top: 8px;
+  right: 8px;
+  background: rgba(0,0,0,0);
   color: #fff;
-  font-size: 13px;
-  padding: 4px 8px;
-  border-radius: 8px;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  z-index: 5;
 }
 
-/* Floating badges (Rating + Delivery inside image) */
+/* ========== Floating Badges ========== */
 .designs-page-container .floating-badges {
   position: absolute;
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 12px;
+  gap: 5px;
   align-items: center;
-  font-size: 12px;
+  font-size: 11px;
+  z-index: 5;
 }
-
 .designs-page-container .floating-badges .badge {
   background: rgba(0,0,0,0.6);
   color: #fff;
-  font-size: 12px;
-  padding: 4px 8px;
+  font-size: 11px;
+  padding: 3px 6px;
   border-radius: 12px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 }
+.designs-page-container .floating-badges .rating-badge { color: #00a82d; }
+.designs-page-container .floating-badges .delivery { color: #fff; }
 
-.designs-page-container .floating-badges .rating-badge {
-  color: #00a82d;
-}
-
-.designs-page-container .floating-badges .delivery {
-  color: #fff;
-}
-
-/* Product Info */
+/* ========== Product Info ========== */
 .designs-page-container .product-info {
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 2px; /* reduced gap between title, price, extra info */
-  width: 150%;
-  margin-bottom: 4px; /* reduce spacing below price */
+  gap: 2px;
+  width: 100%;
+  margin-bottom: 4px;
 }
 .designs-page-container .product-info h5 {
   font-size: 1.05rem;
   font-weight: 600;
   margin: 0;
 }
-
 .designs-page-container .product-price {
-  color: #000000;
+  color: #000;
   font-size: 1.1em;
   font-weight: 600;
   margin: 0;
 }
 
-/* Actions (Cart + Wishlist) */
+/* ========== Actions (Cart + Wishlist) ========== */
 .designs-page-container .product-actions {
   display: flex;
-  gap: 15px; /* decreased gap between buttons */
+  gap: 12px;
   justify-content: center;
   width: 100%;
-  margin-top: 1px; /* spacing from price */
+  margin-top: 4px;
 }
-
 .designs-page-container .wish-btn,
 .designs-page-container .cart-btn {
   background: #c95f7b;
@@ -146,14 +164,13 @@
   transition: 0.2s;
   color: white;
 }
-
 .designs-page-container .wish-btn:hover,
 .designs-page-container .cart-btn:hover {
   background: #b04f69;
   transform: scale(1.1);
 }
 
-/* Modal */
+/* ========== Modal ========== */
 .designs-page-container .modal-backdrop {
   position: fixed;
   top: 0; left: 0;
@@ -166,7 +183,6 @@
   justify-content: center;
   padding: 16px;
 }
-
 .designs-page-container .modal-content {
   background: #080808;
   border-radius: 18px;
@@ -177,43 +193,37 @@
   gap: 24px;
   position: relative;
   color: white;
+  flex-direction: row;
 }
-
 .designs-page-container .modal-image {
   width: 50%;
   border-radius: 12px;
   object-fit: cover;
   max-height: 450px;
 }
-
 .designs-page-container .modal-info {
   width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-
 .designs-page-container .modal-info h4 {
   font-size: 1.5rem;
   margin-bottom: 8px;
 }
-
 .designs-page-container .modal-info p {
   margin-bottom: 0;
 }
-
 .designs-page-container .modal-price {
   font-size: 1.3em;
   font-weight: 700;
-  color: #ffffff;
+  color: #fff;
 }
-
 .designs-page-container .modal-buttons {
   display: flex;
   gap: 12px;
   margin-top: 16px;
 }
-
 .designs-page-container .buy-now-btn {
   background: #b40a37;
   color: #fff;
@@ -223,11 +233,7 @@
   font-size: 1em;
   cursor: pointer;
 }
-
-.designs-page-container .buy-now-btn:hover {
-  background: #b04f69;
-}
-
+.designs-page-container .buy-now-btn:hover { background: #b04f69; }
 .designs-page-container .close-modal-btn {
   background: #eee;
   color: #444;
@@ -238,32 +244,48 @@
   cursor: pointer;
 }
 
-/* Responsive */
+/* ========== Fade Animation ========== */
+.fade-animation { transition: opacity 0.8s ease-in-out; opacity: 1; }
+.fade-animation.fade-out { opacity: 0; }
+
+/* ========== Responsive ========== */
 @media (max-width: 768px) {
   .designs-page-container .product-card { width: 200px; }
   .designs-page-container .product-image { height: 240px; }
-  .designs-page-container .product-actions { gap: 4px; }
+  .designs-page-container .product-actions { gap: 6px; }
 
   .designs-page-container .modal-content {
     flex-direction: column;
   }
   .designs-page-container .modal-image,
-  .designs-page-container .modal-info {
-    width: 100%;
-  }
+  .designs-page-container .modal-info { width: 100%; }
 }
-
 @media (max-width: 480px) {
   .designs-page-container .product-card { width: 95%; }
   .designs-page-container .product-image { height: 200px; }
 }
-
-/* Fade Animation */
-.fade-animation {
-  transition: opacity 0.8s ease-in-out;
-  opacity: 1;
+/* ========== Mini Carousel Arrows on Product Cards ========== */
+.designs-page-container .product-image-box .card-carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.45);
+  border: none;
+  padding: 4px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  color: #fff;
+  transition: 0.2s;
 }
+.designs-page-container .product-image-box .card-carousel-btn:hover {
+  background: rgba(0,0,0,0.65);
+}
+.designs-page-container .product-image-box .card-carousel-btn.left { left: 6px; }
+.designs-page-container .product-image-box .card-carousel-btn.right { right: 6px; }
 
-.fade-animation.fade-out {
-  opacity: 0;
+/* Optional: Small arrow size inside product cards */
+.designs-page-container .product-image-box .card-carousel-btn svg {
+  width: 16px;
+  height: 16px;
 }

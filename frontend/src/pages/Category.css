@@ -12,7 +12,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #13142b;
+  color: #c95f7b;
   font-weight: 500;
   cursor: pointer;
   margin-bottom: 25px;
@@ -97,7 +97,7 @@
   position: absolute;
   bottom: 8px;
   right: 8px;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.6);
   color: #fff;
   font-size: 12px;
   padding: 2px 6px;
@@ -156,7 +156,6 @@
 /* ========== No Products Message ========== */
 .no-products {
   text-align: center;
-  color: #555;
   font-size: 17px;
   margin-top: 40px;
 }

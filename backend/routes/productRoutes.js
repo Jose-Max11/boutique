@@ -9,13 +9,18 @@ import {
   updateProduct,
   deleteProduct,
   searchProducts,
-  addProductReview,
+  rateProduct,
+  commentProduct,
+  getRelatedProducts,
+  deleteRating,
+  deleteComment,
+  getMyReviews,
 } from "../controllers/productController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// Multer setup for multiple images
+// ================= Multer setup for multiple images =================
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const dir = "./uploads";
@@ -26,16 +31,30 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + path.extname(file.originalname));
   },
 });
-
 const upload = multer({ storage });
 
-// Routes
-router.get("/", getProducts);
-router.get("/search", searchProducts);
+// ================= Routes =================
+// Put specific/custom routes BEFORE the generic "/:id" route
+
+router.get("/reviews/my", protect, getMyReviews); // optional alternate path
+router.get("/my-reviews", protect, getMyReviews); // this must come BEFORE "/:id"
+
+router.get("/", getProducts);                  // Get all products
+router.get("/search", searchProducts);         // Search products by name
+router.post("/", upload.array("images", 5), addProduct); // Add product (max 5 images)
+router.put("/:id", upload.array("images", 5), updateProduct); // Update product
+router.delete("/:id", deleteProduct);          // Delete product
+
+// Rating & commenting
+router.post("/:id/rate", protect, rateProduct);
+router.post("/:id/comment", protect, commentProduct);
+router.delete("/:id/rate", protect, deleteRating);
+router.delete("/:id/comment", protect, deleteComment);
+
+// Related products
+router.get("/category/:categoryId/exclude/:excludeId", getRelatedProducts);
+
+// Single product (keep this at bottom, after specific routes)
 router.get("/:id", getProductById);
-router.post("/", upload.array("images", 5), addProduct); // max 5 images
-router.put("/:id", upload.array("images", 5), updateProduct);
-router.delete("/:id", deleteProduct);
-router.post("/:id/review", protect, addProductReview);
 
 export default router;

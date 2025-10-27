@@ -1,0 +1,116 @@
+/* 🌸 Elegant Supplier Revenue Page */
+.supplier-revenue-page {
+  background: linear-gradient(135deg, #fff5f7 0%, #fde4ec 100%);
+  min-height: 100vh;
+  padding: 60px 80px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* 💎 Title */
+.supplier-revenue-page h2 {
+  color: #c95f7b;
+  font-size: 2.2rem;
+  text-align: center;
+  margin-bottom: 40px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 4px rgba(201, 95, 123, 0.3);
+}
+
+/* 🌸 Table Container */
+.supplier-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(201, 95, 123, 0.2);
+  animation: fadeIn 0.8s ease;
+}
+
+/* ✨ Header Row */
+.supplier-table thead {
+  background: linear-gradient(135deg, #c95f7b, #f7a1b9);
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.supplier-table th {
+  padding: 16px 14px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* 🧾 Table Rows */
+.supplier-table td {
+  padding: 14px;
+  text-align: center;
+  font-size: 15px;
+  color: #333;
+  border-bottom: 1px solid rgba(255, 190, 204, 0.4);
+  transition: background-color 0.3s ease;
+}
+
+/* 💫 Hover Row Effect */
+.supplier-table tr:hover {
+  background-color: rgba(255, 240, 245, 0.8);
+}
+
+/* 💸 Status Styling */
+.status-Pending {
+  color: #ff5555;
+  font-weight: 600;
+}
+
+.status-Collected {
+  color: #2ecc71;
+  font-weight: 600;
+}
+
+.status-Paid {
+  color: #f7b731;
+  font-weight: 600;
+}
+
+/* 💖 Button */
+.collect-btn {
+  background: linear-gradient(135deg, #c95f7b, #f87ca0);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(201, 95, 123, 0.3);
+}
+
+.collect-btn:hover {
+  background: linear-gradient(135deg, #b24b69, #e85d8b);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(201, 95, 123, 0.4);
+}
+
+/* 🚫 No Data Text */
+.no-data {
+  text-align: center;
+  color: #777;
+  font-size: 17px;
+  margin-top: 60px;
+  font-weight: 500;
+}
+
+/* ✨ Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

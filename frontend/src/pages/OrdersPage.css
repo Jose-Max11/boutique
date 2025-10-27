@@ -134,3 +134,198 @@
 .undo-notification button:hover {
   background-color: #800000;
 }
+/* OrdersPage.css */
+
+/* Container */
+.reviews-container {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #fff5f7; /* light pink background */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.reviews-container h2 {
+  text-align: center;
+  color: #c95f7b; /* rose-pink title */
+  margin-bottom: 25px;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+/* Review Card */
+.review-card {
+  display: flex;
+  gap: 20px;
+  padding: 15px;
+  margin-bottom: 20px;
+  background-color: #fff; /* white card */
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.review-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+/* Product Image */
+.review-card img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+
+/* Review Details */
+.review-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.review-details h3 {
+  margin: 0 0 5px;
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.review-details p {
+  margin: 4px 0;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.review-details div {
+  margin: 6px 0;
+}
+
+/* Rating Stars */
+.review-details span {
+  font-size: 1rem;
+  margin-right: 2px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .review-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .review-card img {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 10px;
+  }
+
+  .review-details h3 {
+    font-size: 1.1rem;
+  }
+}
+/* =================== Star Rating Input =================== */
+.star-input {
+  display: flex;
+  gap: 5px;
+  cursor: pointer;
+  margin: 5px 0;
+}
+
+.star-input span {
+  font-size: 20px;
+  color: #ccc;
+  transition: color 0.2s;
+}
+
+.star-input span.active,
+.star-input span:hover,
+.star-input span.hovered {
+  color: #c95f7b; /* rose-pink stars */
+}
+
+/* =================== Rate & Comment Section =================== */
+.rate-comment-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 5px;
+}
+
+.rate-comment-section input[type="text"] {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  width: 100%;
+}
+
+.rate-comment-section button {
+  background-color: #c95f7b;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: 0.3s;
+}
+
+.rate-comment-section button:hover {
+  background-color: #a84963;
+}
+
+/* =================== See Reviews Button =================== */
+.see-reviews-btn {
+  background-color: #fff;
+  border: 1px solid #c95f7b;
+  color: #c95f7b;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+.see-reviews-btn:hover {
+  background-color: #c95f7b;
+  color: #fff;
+}
+
+/* =================== Existing Review Card =================== */
+.existing-review {
+  margin-top: 6px;
+  border-top: 1px dashed #ccc;
+  padding-top: 6px;
+}
+
+.existing-review button {
+  background-color: #ff5f5f;
+  color: #fff;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 4px;
+  font-size: 0.85rem;
+  transition: 0.3s;
+}
+
+.existing-review button:hover {
+  background-color: #d94c4c;
+}
+
+/* =================== Responsive Adjustments =================== */
+@media (max-width: 768px) {
+  .rate-comment-section {
+    flex-direction: column;
+  }
+  .star-input span {
+    font-size: 24px;
+  }
+}

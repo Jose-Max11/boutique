@@ -1,0 +1,32 @@
+.reviews-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.review-card {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background-color: #fff5f7;
+}
+
+.review-card img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.review-card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #c95f7b;
+}
+
+.review-card p {
+  margin: 0.2rem 0;
+}
