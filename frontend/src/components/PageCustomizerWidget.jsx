@@ -67,7 +67,7 @@ const PageCustomizerWidget = () => {
         </div>
       )}
 
-      <style jsx>{`
+      <style>{`
         .customizer-widget {
           position: fixed;
           bottom: 20px;
