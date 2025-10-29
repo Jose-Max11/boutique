@@ -2,7 +2,7 @@
 .customers-page-container {
   padding: 20px;
   overflow-x: auto;
-  font-family: 'Poppins', sans-serif; /* Modern, elegant font */
+  font-family: 'Poppins', sans-serif;
   background-color: #fff5f7;
 }
 
@@ -21,23 +21,22 @@ h2 {
   margin-bottom: 30px;
 }
 
+/* Elegant search input only (no icon now) */
 .search-container {
-  position: relative;
   width: 350px;
 }
 
-/* Floating style search input */
 .search-container input {
   width: 100%;
-  padding: 12px 50px 12px 20px; /* extra space for icon */
-  border-radius: 50px; /* pill shape */
+  padding: 12px 20px; /* no icon padding needed */
+  border-radius: 50px;
   border: none;
   font-size: 14px;
   font-family: 'Poppins', sans-serif;
   color: #333;
-  box-shadow: 0 4px 15px rgba(201, 95, 123, 0.2); /* soft floating shadow */
-  transition: all 0.3s ease;
   background-color: #fff;
+  box-shadow: 0 4px 15px rgba(201, 95, 123, 0.2);
+  transition: all 0.3s ease;
 }
 
 .search-container input::placeholder {
@@ -50,29 +49,9 @@ h2 {
   box-shadow: 0 6px 20px rgba(201, 95, 123, 0.35);
 }
 
-/* Floating circular search icon */
+/* Remove icon space completely */
 .search-icon {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 35px;
-  height: 35px;
-  background-color: #c95f7b;
-  color: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(201, 95, 123, 0.3);
-  transition: all 0.3s ease;
-}
-
-.search-icon:hover {
-  background-color: #ff9bb3;
-  box-shadow: 0 6px 15px rgba(201, 95, 123, 0.4);
+  display: none;
 }
 
 /* Elegant Table Styling */
@@ -145,12 +124,6 @@ h2 {
   }
 
   .search-container input {
-    padding: 10px 45px 10px 15px;
-  }
-
-  .search-icon {
-    width: 30px;
-    height: 30px;
-    font-size: 14px;
+    padding: 10px 15px;
   }
 }

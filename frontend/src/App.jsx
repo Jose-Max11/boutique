@@ -35,7 +35,7 @@ import AdminOrdersPage from "./pages/admin/AdminOrdersPage";
 import CategoryPage from "./pages/admin/CategoryPage";
 import Designers from "./pages/admin/Designers";
 import Suppliers from "./pages/admin/Suppliers";
-import AdminSettings from "./pages/admin/Settings";
+import AdminCustomOrders from "./pages/admin/AdminCustomOrders.jsx";
 import OrdersPage from "./pages/admin/OrdersPage";
 import SupplierRevenuePage from "./pages/admin/SupplierRevenuePage";
 import RevenueDashboard from "./pages/admin/RevenueDashboard";
@@ -81,7 +81,7 @@ function App() {
             <Route path="categories" element={<CategoryPage />} />
             <Route path="designers" element={<Designers />} />
             <Route path="suppliers" element={<Suppliers />} />
-            <Route path="settings" element={<AdminSettings />} />
+<Route path="custom-orders" element={<AdminCustomOrders />} />
             {/* ✅ Fixed: relative paths */}
             <Route path="orders" element={<OrdersPage />} />
             <Route path="supplier-revenue" element={<SupplierRevenuePage />} />

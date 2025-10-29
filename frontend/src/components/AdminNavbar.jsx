@@ -116,8 +116,8 @@ function AdminNavbar() {
             <Wallet size={18} /> Manage Revenue
           </li>
 
-          <li onClick={() => navigate("/admin/settings")}>
-            <Settings size={18} /> Settings
+          <li onClick={() => navigate("/admin/custom-orders")}>
+            <Settings size={18} /> Customize
           </li>
         </ul>
 

@@ -207,3 +207,57 @@
     justify-content: flex-start;
   }
 }
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 14px;
+}
+
+.status.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status.accepted {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status.rejected {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.order-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}.status-badge {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.status-badge.accepted {
+  background: #d4f8e8;
+  color: #0b875b;
+  border: 1px solid #0b875b;
+}
+
+.status-badge.rejected {
+  background: #fde2e2;
+  color: #d90429;
+  border: 1px solid #d90429;
+}
+
+.status-badge.pending {
+  background: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+}
+

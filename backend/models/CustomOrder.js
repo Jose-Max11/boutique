@@ -5,7 +5,7 @@ const customOrderSchema = new mongoose.Schema({
   customerName: String,
   email: String,
   phone: String,
-  designer: String,
+  designer: { type: mongoose.Schema.Types.ObjectId, ref: "Designer" },
   productName: String,
   description: String,
   blouseType: String,
@@ -39,6 +39,13 @@ const customOrderSchema = new mongoose.Schema({
   neckDesignImage: String,
   sleeveDesignImage: String,
   inspirationImage: String,
+
+  // ✅ Added status field
+  status: {
+    type: String,
+    enum: ["Pending", "Accepted", "Rejected"],
+    default: "Pending",
+  },
 }, { timestamps: true });
 
 export default mongoose.model("CustomOrder", customOrderSchema);

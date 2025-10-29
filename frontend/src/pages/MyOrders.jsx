@@ -13,8 +13,72 @@ export default function OrderHistoryPage() {
   const [commentInputs, setCommentInputs] = useState({});
   const [ratingInputs, setRatingInputs] = useState({});
   const navigate = useNavigate();
-
   const currentUserId = localStorage.getItem("userId");
+
+  // ---- Helper: resolve image from many shapes ----
+  const resolveImageSrc = (item, product) => {
+    // gather candidates in priority order
+    const candidates = [];
+
+    // product.images: could be array of strings or array of objects
+    if (product?.images) {
+      if (Array.isArray(product.images) && product.images.length > 0) {
+        product.images.forEach((img) => candidates.push(img));
+      } else if (typeof product.images === "string") {
+        candidates.push(product.images);
+      }
+    }
+
+    // product.image (string or object)
+    if (product?.image) candidates.push(product.image);
+
+    // item.image fallback (older schema)
+    if (item?.image) candidates.push(item.image);
+
+    // item.productImage or other variants some backends use
+    if (item?.productImage) candidates.push(item.productImage);
+    if (item?.imageUrl) candidates.push(item.imageUrl);
+
+    // try to normalize and return first usable
+    for (let img of candidates) {
+      if (!img) continue;
+
+      // if image is an object, look for common url/path fields
+      if (typeof img === "object") {
+        const url = img.url || img.path || img.filename || img.publicUrl || img.src;
+        if (!url) continue;
+        img = url;
+      }
+
+      if (typeof img !== "string") continue;
+
+      // already full URL?
+      if (/^https?:\/\//i.test(img)) return img;
+
+      // otherwise assume it's a relative path from backend root; remove leading slashes to avoid //
+      const clean = img.replace(/^\/+/, "");
+      return `${BACKEND_URL}/${clean}`;
+    }
+
+    // last resort: if product has thumbnails or nested props
+    try {
+      const maybe = product && (
+        product.thumbnail ||
+        product.thumb ||
+        product.imageUrl ||
+        product.img
+      );
+      if (maybe && typeof maybe === "string") {
+        if (/^https?:\/\//i.test(maybe)) return maybe;
+        return `${BACKEND_URL}/${maybe.replace(/^\/+/, "")}`;
+      }
+    } catch (e) {
+      // ignore
+    }
+
+    // placeholder
+    return "https://dummyimage.com/100x100/ccc/fff&text=No+Image";
+  };
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -24,16 +88,36 @@ export default function OrderHistoryPage() {
           headers: { Authorization: token ? `Bearer ${token}` : "" },
         });
 
+        // Debugging: log raw orders response so you can see fields
+        console.log("RAW orders response:", res.data);
+
         const ordersWithProducts = await Promise.all(
           res.data.orders.map(async (order) => {
+            // log each order briefly for debugging
+            console.log("Order fetched:", order._id, order.orderNumber);
+
             const itemsWithProducts = await Promise.all(
               order.items.map(async (item) => {
-                if (!item.productId) return item;
-                const productRes = await axios.get(
-                  `${BACKEND_URL}/api/products/${item.productId}`,
-                  { headers: { Authorization: token ? `Bearer ${token}` : "" } }
-                );
-                return { ...item, product: productRes.data };
+                try {
+                  if (!item.productId) return item;
+
+                  const productRes = await axios.get(
+                    `${BACKEND_URL}/api/products/${item.productId}`,
+                    { headers: { Authorization: token ? `Bearer ${token}` : "" } }
+                  );
+
+                  // log product payload
+                  console.log("Product fetched for item:", item.productId, productRes.data);
+
+                  // ensure product is normalized (some APIs wrap in { product: {...} })
+                  const product = productRes.data.product || productRes.data;
+
+                  return { ...item, product };
+                } catch (err) {
+                  console.error("Error fetching product for item:", item, err);
+                  // return item unchanged so UI still renders
+                  return item;
+                }
               })
             );
             return { ...order, items: itemsWithProducts };
@@ -42,7 +126,7 @@ export default function OrderHistoryPage() {
 
         setOrders(ordersWithProducts);
       } catch (err) {
-        console.error(err);
+        console.error("Failed to fetch orders:", err);
         alert("Failed to fetch orders");
       }
     };
@@ -88,6 +172,7 @@ export default function OrderHistoryPage() {
     }
   };
 
+  // rating/comment/deleteReview functions (same as your original; omitted here for brevity)
   const submitRating = async (productId) => {
     try {
       const token = localStorage.getItem("token");
@@ -106,7 +191,7 @@ export default function OrderHistoryPage() {
           ...order,
           items: order.items.map((item) =>
             (item.productId || item.product?._id) === productId
-              ? { ...item, product: res.data.product }
+              ? { ...item, product: res.data.product || res.data }
               : item
           ),
         }))
@@ -136,7 +221,7 @@ export default function OrderHistoryPage() {
           ...order,
           items: order.items.map((item) =>
             (item.productId || item.product?._id) === productId
-              ? { ...item, product: res.data.product }
+              ? { ...item, product: res.data.product || res.data }
               : item
           ),
         }))
@@ -205,8 +290,8 @@ export default function OrderHistoryPage() {
                 )}
               </div>
 
-              <p>Total: ₹{order.totalAmount.toFixed(2)}</p>
-              <p>Payment: {order.paymentMethod.toUpperCase()}</p>
+              <p>Total: ₹{(order.totalAmount || 0).toFixed(2)}</p>
+              <p>Payment: {(order.paymentMethod || "").toUpperCase()}</p>
 
               <div className="horizontal-progress">
                 {statusStages.map((stage, idx) => {
@@ -228,27 +313,26 @@ export default function OrderHistoryPage() {
               <h4>Items:</h4>
               <div className="order-items">
                 {order.items.map((item, index) => {
-                  const productId = item.productId || item.product?._id;
+                  const product = item.product;
+                  const productId = item.productId || product?._id;
+                  const imageSrc = resolveImageSrc(item, product);
+
                   const canRateOrComment = order.status === "delivered";
-                  const existingReview = item.product?.reviews?.find(
+                  const existingReview = product?.reviews?.find(
                     (r) => r.user?._id === currentUserId
                   );
 
                   return (
                     <div key={index} className="order-item">
                       <img
-                        src={
-                          item.image
-                            ? item.image.startsWith("http")
-                              ? item.image
-                              : `${BACKEND_URL}/${item.image}`
-                            : "https://dummyimage.com/50x50/ccc/fff&text=No+Image"
-                        }
-                        alt={item.name}
+                        src={imageSrc}
+                        alt={product?.name || item.name}
+                        style={{ width: 100, height: 100, objectFit: "cover", borderRadius: 8 }}
                       />
+
                       <div className="order-item-details">
-                        <span>{item.name} × {item.quantity}</span>
-                        <span>₹{(item.price * item.quantity).toFixed(2)}</span>
+                        <span>{product?.name || item.name} × {item.quantity}</span>
+                        <span>₹{((item.price || 0) * (item.quantity || 1)).toFixed(2)}</span>
 
                         {existingReview && (
                           <div className="existing-review">
@@ -256,7 +340,9 @@ export default function OrderHistoryPage() {
                               {[1, 2, 3, 4, 5].map((star) => (
                                 <span
                                   key={star}
-                                  style={{ color: star <= existingReview.rating ? "#c95f7b" : "#ccc" }}
+                                  style={{
+                                    color: star <= existingReview.rating ? "#c95f7b" : "#ccc",
+                                  }}
                                 >
                                   ★
                                 </span>
@@ -269,7 +355,6 @@ export default function OrderHistoryPage() {
 
                         {canRateOrComment && productId && (
                           <div className="rate-comment-section">
-                            {/* ⭐ Star Rating Input */}
                             <div className="star-input">
                               {[1, 2, 3, 4, 5].map((star) => (
                                 <span
@@ -291,7 +376,10 @@ export default function OrderHistoryPage() {
                               placeholder="Add comment"
                               value={commentInputs[productId] || ""}
                               onChange={(e) =>
-                                setCommentInputs({ ...commentInputs, [productId]: e.target.value })
+                                setCommentInputs({
+                                  ...commentInputs,
+                                  [productId]: e.target.value,
+                                })
                               }
                             />
                             <button onClick={() => submitComment(productId)}>Submit Comment</button>

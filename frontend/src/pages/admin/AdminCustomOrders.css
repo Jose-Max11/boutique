@@ -1,0 +1,284 @@
+/* ================================
+   Admin Custom Orders Page Styles
+   Scoped under .admin-orders-container
+   ================================ */
+
+.admin-orders-container {
+  padding: 30px;
+  background-color: #fff5f7;
+  font-family: "Poppins", sans-serif;
+  color: #333;
+  min-height: 100vh;
+}
+
+.admin-orders-title {
+  text-align: center;
+  color: #c95f7b;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 25px;
+  letter-spacing: 0.5px;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
+
+.no-orders {
+  text-align: center;
+  color: #777;
+  font-size: 1.2rem;
+  margin-top: 40px;
+}
+
+.orders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 25px;
+  padding-bottom: 60px;
+}
+
+/* ============ Order Card ============ */
+.order-card {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 2px 10px rgba(201, 95, 123, 0.1);
+  padding: 20px;
+  transition: all 0.3s ease;
+  border: 1px solid #f3ccd6;
+}
+
+.order-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 15px rgba(201, 95, 123, 0.2);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #c95f7b;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.order-info p {
+  margin: 5px 0;
+  font-size: 0.95rem;
+}
+
+/* ============ Sections ============ */
+.section {
+  background-color: #fff9fa;
+  border-radius: 10px;
+  padding: 12px 15px;
+  margin: 10px 0;
+  border: 1px solid #f8dbe2;
+}
+
+.section h3 {
+  color: #c95f7b;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #f4c6d0;
+  padding-bottom: 4px;
+}
+
+.section p {
+  margin: 4px 0;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+/* ============ Image Section ============ */
+.order-images {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.clickable-image {
+  width: 65px;
+  height: 65px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid #f5c2cf;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.clickable-image:hover {
+  transform: scale(1.1);
+  border-color: #c95f7b;
+}
+
+.image-placeholder {
+  width: 65px;
+  height: 65px;
+  border-radius: 10px;
+  background-color: #f8dbe2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #c95f7b;
+  opacity: 0.7;
+}
+
+/* ============ Order Footer ============ */
+.order-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px solid #f3ccd6;
+}
+
+.order-status {
+  font-weight: 600;
+  color: #c95f7b;
+  background: #ffe8ee;
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.order-date {
+  color: #888;
+  font-size: 0.85rem;
+}
+
+/* ============ Action Buttons ============ */
+.order-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.accept-btn,
+.reject-btn {
+  border: none;
+  padding: 8px 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.accept-btn {
+  background-color: #c95f7b;
+  color: #fff;
+}
+
+.accept-btn:hover {
+  background-color: #b44d6a;
+}
+
+.reject-btn {
+  background-color: #fff;
+  color: #c95f7b;
+  border: 2px solid #c95f7b;
+}
+
+.reject-btn:hover {
+  background-color: #ffe8ee;
+}
+
+/* ============ Image Modal ============ */
+.image-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.image-modal {
+  background: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  position: relative;
+  text-align: center;
+  max-width: 80%;
+  max-height: 85%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.modal-image {
+  max-width: 100%;
+  max-height: 70vh;
+  border-radius: 10px;
+  border: 3px solid #f8dbe2;
+}
+
+.modal-actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.icon-btn {
+  background: #c95f7b;
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+.icon-btn:hover {
+  background: #b44d6a;
+}
+
+.download-btn {
+  background: #7ac27a;
+}
+
+.download-btn:hover {
+  background: #68a968;
+}
+
+.close-btn {
+  background: #f37b7b;
+}
+
+.close-btn:hover {
+  background: #d96363;
+}
+
+/* ============ Responsive ============ */
+@media (max-width: 768px) {
+  .orders-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-orders-title {
+    font-size: 1.6rem;
+  }
+
+  .order-card {
+    padding: 15px;
+  }
+
+  .clickable-image,
+  .image-placeholder {
+    width: 55px;
+    height: 55px;
+  }
+}

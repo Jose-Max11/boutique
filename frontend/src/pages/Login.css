@@ -37,7 +37,7 @@ body {
 
 .btn-primary {
   width: 100%;
-  background: #13142b;
+  background: #c95f7b;
   color: #fff;
   padding: 12px 0;
   border: none;
@@ -48,7 +48,7 @@ body {
 }
 
 .btn-primary:hover {
-  background: #13142b;
+  background: #c95f7b;
 }
 
 .divider {
@@ -77,7 +77,7 @@ body {
 
 .btn-google {
   width: 100%;
-  background: #13142b;
+  background: #c95f7b;
   color: #fff;
   padding: 12px 0;
   border: none;
@@ -88,7 +88,7 @@ body {
 }
 
 .btn-google:hover {
-  background: #13142b;
+  background: #c95f7b;
 }
 
 .signup-text {
@@ -97,7 +97,7 @@ body {
 }
 
 .signup-link {
-  color: #13142b;
+  color: #c95f7b;
   text-decoration: none;
   font-weight: 500;
 }
