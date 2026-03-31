@@ -20,9 +20,9 @@ export default function Footer() {
           <h4>Quick Links</h4>
           <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/shop">Shop</a></li>
+            <li><a href="/designs">Shop</a></li>
             <li><a href="/customize">Customize</a></li>
-            <li><a href="/design">Designs</a></li>
+            <li><a href="/designs">Designs</a></li>
             <li><a href="/designers">Designers</a></li>
             <li><a href="/contact">Contact</a></li>
             <li><a href="/review">Reviews</a></li>
@@ -34,11 +34,13 @@ export default function Footer() {
         <div className="footer-section">
           <h4>Shop Categories</h4>
           <ul>
-            <li><a href="/shop?sarees">Sarees</a></li>
-            <li><a href="/shop?kurtis">Kurtis</a></li>
-            <li><a href="/shop?gowns">Gowns</a></li>
-            <li><a href="/shop?bridal">Bridal Wear</a></li>
-            <li><a href="/shop?accessories">Accessories</a></li>
+            <li><a href="/category/68c9a1357572af9e063616c8">Sarees</a></li>
+            <li><a href="/category/68c9a2ae7572af9e063616dc">Kurtis</a></li>
+            <li><a href="/category/68c9a518d96bea6cc783e4f5">Lehanga</a></li>
+            <li><a href="/category/68ce727fdc5cb9ee98c7b2fa">Bridal Silks</a></li>
+            <li><a href="/category/68d2474175ae29326c7dff2d">Party Dresses</a></li>
+            <li><a href="/category/68de8891cc1d3a0407291cd2">Casual</a></li>
+            <li><a hred="/category/68ef6e48ed677702d7dc391f">Kurtas</a></li>
           </ul>
         </div>
 

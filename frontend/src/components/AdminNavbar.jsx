@@ -112,9 +112,7 @@ function AdminNavbar() {
           <li onClick={() => navigate("/admin/supplier-revenue")}>
             <CreditCard size={18} /> Supplier Revenue
           </li>
-          <li onClick={() => navigate("/admin/orders")}>
-            <Wallet size={18} /> Manage Revenue
-          </li>
+       
 
           <li onClick={() => navigate("/admin/custom-orders")}>
             <Settings size={18} /> Customize

@@ -1,12 +1,13 @@
-/* Page container and font */
+/* src/pages/admin/CustomersPage.css - YOUR THEME + VIEW ORDERS */
 .customers-page-container {
   padding: 20px;
   overflow-x: auto;
   font-family: 'Poppins', sans-serif;
   background-color: #fff5f7;
+  min-height: 100vh;
 }
 
-h2 {
+.customers-page-container h2 {
   text-align: center;
   margin-bottom: 25px;
   color: #c95f7b;
@@ -14,21 +15,20 @@ h2 {
   font-weight: 700;
 }
 
-/* Centered search wrapper */
+/* Search */
 .search-wrapper {
   display: flex;
   justify-content: center;
   margin-bottom: 30px;
 }
 
-/* Elegant search input only (no icon now) */
 .search-container {
   width: 350px;
 }
 
 .search-container input {
   width: 100%;
-  padding: 12px 20px; /* no icon padding needed */
+  padding: 12px 20px;
   border-radius: 50px;
   border: none;
   font-size: 14px;
@@ -47,83 +47,122 @@ h2 {
 .search-container input:focus {
   outline: none;
   box-shadow: 0 6px 20px rgba(201, 95, 123, 0.35);
+  transform: translateY(-1px);
 }
 
-/* Remove icon space completely */
-.search-icon {
-  display: none;
+/* Table */
+.table-wrapper {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(201, 95, 123, 0.15);
+  margin: 0 auto;
+  max-width: 1400px;
 }
 
-/* Elegant Table Styling */
-.customers-orders-table {
+.customers-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  min-width: 1200px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  border-radius: 12px;
-  overflow: hidden;
+  min-width: 800px;
 }
 
-.customers-orders-table th,
-.customers-orders-table td {
-  padding: 12px 15px;
+.customers-table th,
+.customers-table td {
+  padding: 15px 20px;
   text-align: center;
   transition: all 0.3s ease;
 }
 
-.customers-orders-table th {
+.customers-table th {
   background: linear-gradient(90deg, #c95f7b, #ff9bb3);
   color: #fff;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-family: 'Poppins', sans-serif;
+  font-size: 13px;
 }
 
-.customers-orders-table td {
+.customers-table td {
   background-color: #ffffff;
   font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  color: #333;
 }
 
-.customers-orders-table tr:nth-child(even) td {
+.customers-table tr:nth-child(even) td {
   background-color: #fff0f5;
 }
 
-.customers-orders-table tr:hover td {
+.customers-table tr:hover td {
   background-color: #ffe6f0;
   transform: scale(1.01);
 }
 
-/* Rounded first & last column */
-.customers-orders-table th:first-child,
-.customers-orders-table td:first-child {
+/* Rounded corners */
+.customers-table th:first-child,
+.customers-table td:first-child {
   border-top-left-radius: 12px;
   border-bottom-left-radius: 12px;
 }
 
-.customers-orders-table th:last-child,
-.customers-orders-table td:last-child {
+.customers-table th:last-child,
+.customers-table td:last-child {
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
 }
 
-/* Mobile responsiveness */
+/* NEW: View Orders Button */
+.view-orders-btn {
+  background: linear-gradient(90deg, #c95f7b, #ff9bb3);
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 25px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(201, 95, 123, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.view-orders-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(201, 95, 123, 0.4);
+  background: linear-gradient(90deg, #b54d65, #e68aa0);
+}
+
+.view-orders-btn:active {
+  transform: translateY(0);
+}
+
+/* Responsive */
 @media (max-width: 768px) {
-  .customers-orders-table {
+  .customers-page-container {
+    padding: 15px;
+  }
+  
+  .customers-table {
     font-size: 12px;
+    min-width: 100%;
   }
-
-  .customers-orders-table th,
-  .customers-orders-table td {
-    padding: 8px;
+  
+  .customers-table th,
+  .customers-table td {
+    padding: 10px 8px;
   }
-
+  
   .search-container {
     width: 90%;
   }
+}
 
-  .search-container input {
-    padding: 10px 15px;
+@media (max-width: 480px) {
+  .customers-page-container h2 {
+    font-size: 22px;
   }
 }

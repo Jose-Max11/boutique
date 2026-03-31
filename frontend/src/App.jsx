@@ -24,6 +24,7 @@ import MyReviewsPage from "./pages/MyReviewsPage.jsx";
 import CustomizationConfirmation from "./pages/CustomizationConfirmation";
 import PageCustomizerWidget from "./components/PageCustomizerWidget";
 import ExpoPage from "./pages/ExpoPage";
+import SharedWishlistPage from "./pages/SharedWishlistPage";
 
 // Admin pages
 import AdminLayout from "./pages/admin/AdminLayout.jsx";
@@ -39,6 +40,8 @@ import AdminCustomOrders from "./pages/admin/AdminCustomOrders.jsx";
 import OrdersPage from "./pages/admin/OrdersPage";
 import SupplierRevenuePage from "./pages/admin/SupplierRevenuePage";
 import RevenueDashboard from "./pages/admin/RevenueDashboard";
+import CustomersPage from "./pages/admin/CustomersPage"; // Changed name
+// Then use <Route path="customers" element={<CustomersPage />} />
 
 function App() {
   return (
@@ -62,7 +65,7 @@ function App() {
         <Route path="/designs/:id" element={<ProductDetailsPage />} />
         <Route path="/my-reviews" element={<MyReviewsPage />} />
         <Route path="/expo" element={<ExpoPage />} />
-
+        <Route path="/shared-wishlist/:shareId" element={<SharedWishlistPage />} />
         {/* Protected User Routes */}
         <Route element={<PrivateRoute allowedRoles={["user"]} />}>
           <Route path="/user" element={<UserDashboard />} />
@@ -76,12 +79,12 @@ function App() {
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="reports" element={<ReportPage />} />
             <Route path="products" element={<ProductsPage />} />
-            <Route path="customers" element={<UsersPage />} />
+            <Route path="customers" element={<CustomersPage />} />
             <Route path="sales" element={<AdminOrdersPage />} />
             <Route path="categories" element={<CategoryPage />} />
             <Route path="designers" element={<Designers />} />
             <Route path="suppliers" element={<Suppliers />} />
-<Route path="custom-orders" element={<AdminCustomOrders />} />
+            <Route path="custom-orders" element={<AdminCustomOrders />} />
             {/* ✅ Fixed: relative paths */}
             <Route path="orders" element={<OrdersPage />} />
             <Route path="supplier-revenue" element={<SupplierRevenuePage />} />

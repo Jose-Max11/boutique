@@ -22,6 +22,8 @@ import userRoutes from "./routes/user.js";
 import customOrdersRoutes from "./routes/customOrders.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
 import revenueRoutes from "./routes/revenueRoutes.js";
+import sharedWishlistRoutes from "./routes/sharedWishlistRoutes.js";
+import compareRoutes from "./routes/compareRoutes.js";
 
 import { protect, authorize } from "./middleware/authMiddleware.js";
 import "./config/passport.js";
@@ -84,6 +86,8 @@ app.use("/api/cart", cartRoutes);
 app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/custom-orders", customOrdersRoutes);
 app.use("/api/revenue", revenueRoutes);
+app.use("/api/shared-wishlist", sharedWishlistRoutes);
+app.use("/api/compare", compareRoutes);
 
 // --- Example protected routes ---
 app.get("/admin-data", protect, authorize(["admin"]), (req, res) => {

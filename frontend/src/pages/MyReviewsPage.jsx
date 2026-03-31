@@ -11,86 +11,112 @@ export default function MyReviewsPage() {
   const [editingReviewId, setEditingReviewId] = useState(null);
   const [updatedComment, setUpdatedComment] = useState("");
   const [updatedRating, setUpdatedRating] = useState(0);
+  const [saving, setSaving] = useState(false);
 
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const productId = query.get("productId");
 
+  const fetchReviews = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.get(`${BACKEND_URL}/api/products/my-reviews`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const filtered = productId
+        ? res.data.filter((r) => r.productId === productId)
+        : res.data;
+
+      setReviews(filtered);
+    } catch (err) {
+      console.error("Failed to fetch reviews:", err);
+      alert("Failed to fetch reviews");
+    }
+  };
+
   useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const res = await axios.get(`${BACKEND_URL}/api/products/my-reviews`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        const filtered = productId
-          ? res.data.filter((r) => r.productId === productId)
-          : res.data;
-
-        setReviews(filtered);
-      } catch (err) {
-        console.error("Failed to fetch reviews:", err);
-        alert("Failed to fetch reviews");
-      }
-    };
-
     fetchReviews();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productId]);
 
   // ================= UPDATE REVIEW =================
   const handleUpdate = async (review) => {
+    // FIX: Validate before sending
+    if (!updatedRating || isNaN(updatedRating) || updatedRating < 1 || updatedRating > 5) {
+      alert("Please select a star rating between 1 and 5.");
+      return;
+    }
+    if (!updatedComment.trim()) {
+      alert("Please enter a comment.");
+      return;
+    }
+
+    setSaving(true);
     try {
       const token = localStorage.getItem("token");
+      const headers = { Authorization: `Bearer ${token}` };
+
+      // FIX: Submit rating first, then comment sequentially with proper error handling
       await axios.post(
         `${BACKEND_URL}/api/products/${review.productId}/rate`,
         { rating: updatedRating },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers }
       );
 
       await axios.post(
         `${BACKEND_URL}/api/products/${review.productId}/comment`,
-        { comment: updatedComment },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { comment: updatedComment.trim() },
+        { headers }
       );
 
-      // Refresh reviews after update
       setEditingReviewId(null);
       setUpdatedComment("");
       setUpdatedRating(0);
-      const res = await axios.get(`${BACKEND_URL}/api/products/my-reviews`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setReviews(productId ? res.data.filter((r) => r.productId === productId) : res.data);
+
+      // Refresh reviews after successful update
+      await fetchReviews();
+
+      alert("Review updated successfully!");
     } catch (err) {
       console.error("Failed to update review:", err);
-      alert("Failed to update review");
+      const msg =
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        "Failed to update review. Please try again.";
+      alert(msg);
+    } finally {
+      setSaving(false);
     }
   };
 
   // ================= DELETE REVIEW =================
   const handleDelete = async (review) => {
+    if (!window.confirm("Are you sure you want to delete this review?")) return;
+
     try {
       const token = localStorage.getItem("token");
+      const headers = { Authorization: `Bearer ${token}` };
 
-      // Delete rating
-      await axios.delete(`${BACKEND_URL}/api/products/${review.productId}/rate`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      // FIX: Delete both and refresh — order matters (comment first, then rating)
+      await axios.delete(
+        `${BACKEND_URL}/api/products/${review.productId}/comment`,
+        { headers }
+      );
+      await axios.delete(
+        `${BACKEND_URL}/api/products/${review.productId}/rate`,
+        { headers }
+      );
 
-      // Delete comment
-      await axios.delete(`${BACKEND_URL}/api/products/${review.productId}/comment`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      // Refresh reviews
-      const res = await axios.get(`${BACKEND_URL}/api/products/my-reviews`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setReviews(productId ? res.data.filter((r) => r.productId === productId) : res.data);
+      // Refresh reviews after deletion
+      await fetchReviews();
     } catch (err) {
       console.error("Failed to delete review:", err);
-      alert("Failed to delete review");
+      const msg =
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        "Failed to delete review.";
+      alert(msg);
     }
   };
 
@@ -98,13 +124,17 @@ export default function MyReviewsPage() {
     <div>
       <Navbar />
 
-      {/* ===== Go Back Button ===== */}
-    <div
-  style={{ padding: "16px", cursor: "pointer", fontSize: "1.2rem", color: "#000000ff" }}
-  onClick={() => window.history.back()}
->
-  ← Go Back
-</div>
+      <div
+        style={{
+          padding: "16px",
+          cursor: "pointer",
+          fontSize: "1.2rem",
+          color: "#000000ff",
+        }}
+        onClick={() => window.history.back()}
+      >
+        ← Go Back
+      </div>
 
       <div className="reviews-container">
         <h2>My Reviews</h2>
@@ -126,6 +156,7 @@ export default function MyReviewsPage() {
                 <h3>{r.name}</h3>
                 <p>Category: {r.category || "N/A"}</p>
 
+                {/* Star display / edit */}
                 <div>
                   Rating:{" "}
                   {[1, 2, 3, 4, 5].map((star) => (
@@ -140,10 +171,13 @@ export default function MyReviewsPage() {
                             : star <= r.rating
                             ? "#fef218ff"
                             : "#ccc",
-                        cursor: editingReviewId === r.productId ? "pointer" : "default",
+                        cursor:
+                          editingReviewId === r.productId ? "pointer" : "default",
+                        fontSize: "1.2rem",
                       }}
                       onClick={() => {
-                        if (editingReviewId === r.productId) setUpdatedRating(star);
+                        if (editingReviewId === r.productId)
+                          setUpdatedRating(star);
                       }}
                     >
                       ★
@@ -151,22 +185,26 @@ export default function MyReviewsPage() {
                   ))}
                 </div>
 
+                {/* Comment display / edit */}
                 {editingReviewId === r.productId ? (
                   <textarea
                     value={updatedComment}
                     onChange={(e) => setUpdatedComment(e.target.value)}
                     rows={3}
                     style={{ width: "100%", padding: "5px", marginTop: "5px" }}
+                    placeholder="Write your updated comment..."
                   />
                 ) : (
                   <p>Comment: {r.comment || "No comment"}</p>
                 )}
 
+                {/* Action buttons */}
                 <div style={{ marginTop: "8px" }}>
                   {editingReviewId === r.productId ? (
                     <>
                       <button
                         onClick={() => handleUpdate(r)}
+                        disabled={saving}
                         style={{
                           marginRight: "8px",
                           backgroundColor: "#c95f7b",
@@ -174,13 +212,19 @@ export default function MyReviewsPage() {
                           border: "none",
                           padding: "5px 12px",
                           borderRadius: "6px",
-                          cursor: "pointer",
+                          cursor: saving ? "not-allowed" : "pointer",
+                          opacity: saving ? 0.7 : 1,
                         }}
                       >
-                        Save
+                        {saving ? "Saving..." : "Save"}
                       </button>
                       <button
-                        onClick={() => setEditingReviewId(null)}
+                        onClick={() => {
+                          setEditingReviewId(null);
+                          setUpdatedComment("");
+                          setUpdatedRating(0);
+                        }}
+                        disabled={saving}
                         style={{
                           backgroundColor: "#eee",
                           color: "#333",
